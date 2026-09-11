@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>显化旅程</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --bg-deep: #12132a;
+  --bg-panel: #1b1d3d;
+  --bg-panel-hi: #232650;
+  --gold: #e4b94f;
+  --gold-dim: #7a6a3a;
+  --rose: #c98ca7;
+  --text-primary: #f3efe3;
+  --text-muted: #9497b8;
+  --line: #34365e;
+  --radius: 14px;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:transparent;}
+body{
+  font-family:'Inter',sans-serif;
+  color:var(--text-primary);
+  background:
+    radial-gradient(ellipse at 20% -10%, #23255a 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 10%, #2a1f45 0%, transparent 50%),
+    var(--bg-deep);
+  min-height:100vh;
+  padding:0;
+}
+
+.wrap{max-width:760px;margin:0 auto;padding:36px 20px 110px;}
+
+/* ---------- Hero ---------- */
+.hero{text-align:center;padding:10px 0 24px;}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--rose); margin-bottom:10px;
+}
+h1{font-family:'Fraunces',serif;font-weight:500;font-size:34px;margin:0 0 6px;letter-spacing:-0.01em;}
+.sub{color:var(--text-muted);font-size:14px;margin:0 0 8px;line-height:1.6;}
+
+/* ---------- Breadcrumb / back ---------- */
+.crumbs{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--text-muted);
+  margin:18px 0 18px;
+}
+.crumbs .seg{cursor:pointer;transition:color .2s ease;}
+.crumbs .seg:hover{color:var(--gold);}
+.crumbs .seg.current{color:var(--text-primary);cursor:default;}
+.crumbs .sep{color:var(--line);}
+
+/* ---------- Category grid ---------- */
+.cat-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:10px;
+}
+@media(max-width:480px){.cat-grid{grid-template-columns:1fr;}}
+.cat-card{
+  background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px 18px;cursor:pointer;transition:all .25s ease;text-align:left;
+}
+.cat-card:hover{border-color:var(--gold-dim);transform:translateY(-2px);}
+.cat-icon{font-size:26px;margin-bottom:10px;display:block;}
+.cat-cn{font-size:16px;font-weight:500;margin-bottom:2px;}
+.cat-en{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:.04em;margin-bottom:10px;}
+.cat-count{font-size:12px;color:var(--gold);}
+.cat-count.empty{color:var(--text-muted);}
+
+/* ---------- Vision list ---------- */
+.preset-block{margin:6px 0 18px;}
+.preset-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:.03em;margin-bottom:10px;}
+.preset-chips{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{
+  background:var(--bg-panel);border:1px solid var(--line);color:var(--text-primary);
+  font-size:12.5px;padding:8px 14px;border-radius:999px;cursor:pointer;
+  transition:all .2s ease;font-family:'Inter',sans-serif;
+}
+.chip:hover{border-color:var(--gold);color:var(--gold);background:var(--bg-panel-hi);}
+
+.add-vision-row{display:flex;gap:8px;margin:6px 0 20px;}
+.add-vision-row input{
+  flex:1;background:var(--bg-panel-hi);border:1px solid var(--line);border-radius:10px;
+  color:var(--text-primary);font-size:13.5px;padding:10px 12px;font-family:'Inter',sans-serif;
+}
+.add-vision-row input:focus{outline:none;border-color:var(--gold-dim);}
+.add-vision-row button{
+  background:var(--gold);border:none;color:#12132a;font-weight:600;font-size:13px;
+  padding:0 18px;border-radius:10px;cursor:pointer;white-space:nowrap;
+}
+
+.vision-list{display:flex;flex-direction:column;gap:10px;}
+.vision-card{
+  background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 18px;cursor:pointer;transition:border-color .2s ease;
+  display:flex;align-items:center;gap:14px;
+}
+.vision-card:hover{border-color:var(--gold-dim);}
+.vision-card .vc-title{flex:1;font-size:14.5px;font-weight:500;}
+.vision-card .vc-progress{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);flex-shrink:0;}
+.vision-card .vc-del{background:none;border:none;color:var(--text-muted);font-size:16px;cursor:pointer;flex-shrink:0;}
+.vision-card .vc-del:hover{color:var(--rose);}
+.vision-empty{color:var(--text-muted);font-size:13.5px;text-align:center;padding:30px 0;}
+
+/* ---------- Vision detail header ---------- */
+.vd-header{margin-bottom:8px;}
+.vd-title{font-family:'Fraunces',serif;font-size:28px;font-weight:500;margin:0 0 12px;}
+.vd-desc-wrap{margin-bottom:22px;}
+.vd-desc-wrap label{display:block;font-size:12.5px;color:var(--text-muted);margin-bottom:6px;font-family:'IBM Plex Mono',monospace;letter-spacing:.03em;}
+.vd-desc-wrap textarea{
+  width:100%;background:var(--bg-panel-hi);border:1px solid var(--line);border-radius:10px;
+  color:var(--text-primary);font-family:'Inter',sans-serif;font-size:13.5px;padding:12px;
+  resize:vertical;min-height:64px;line-height:1.6;
+}
+.vd-desc-wrap textarea:focus{outline:none;border-color:var(--gold-dim);}
+.vd-delete{
+  background:none;border:1px solid var(--line);color:var(--text-muted);
+  font-family:'IBM Plex Mono',monospace;font-size:11px;padding:7px 14px;border-radius:8px;
+  cursor:pointer;margin-bottom:10px;
+}
+.vd-delete:hover{border-color:var(--rose);color:var(--rose);}
+
+/* ---------- Constellation ---------- */
+.constellation{width:100%;max-width:620px;margin:0 auto;display:block;}
+.constellation .link{stroke:var(--line);stroke-width:1.5;fill:none;transition:stroke .6s ease;}
+.constellation .link.lit{stroke:var(--gold);}
+.constellation .star-halo{fill:var(--gold);opacity:0;transition:opacity .6s ease;}
+.constellation .star-halo.lit{opacity:.18;}
+.constellation .star{fill:var(--bg-panel);stroke:var(--line);stroke-width:1.5;transition:all .5s ease;cursor:pointer;}
+.constellation .star.lit{fill:var(--gold);stroke:var(--gold);}
+.constellation text{font-family:'IBM Plex Mono',monospace;font-size:10px;fill:var(--text-muted);pointer-events:none;}
+.constellation text.lit{fill:var(--gold);}
+.progress-label{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted);margin-top:6px;text-align:center;}
+.progress-label b{color:var(--gold);font-weight:500;}
+
+/* ---------- Step cards ---------- */
+.steps{display:flex;flex-direction:column;gap:14px;margin-top:22px;}
+.step{background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:border-color .3s ease;}
+.step.done{border-color:var(--gold-dim);}
+.step-head{display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;user-select:none;}
+.step-num{font-family:'Fraunces',serif;font-size:20px;color:var(--text-muted);width:30px;flex-shrink:0;transition:color .3s ease;}
+.step.done .step-num{color:var(--gold);}
+.step-titles{flex:1;min-width:0;}
+.step-cn{font-size:15.5px;font-weight:500;}
+.step-en{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--text-muted);letter-spacing:.04em;margin-top:2px;}
+.step-check{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s ease;}
+.step.done .step-check{background:var(--gold);border-color:var(--gold);}
+.step-check svg{width:12px;height:12px;opacity:0;transition:opacity .2s ease;}
+.step.done .step-check svg{opacity:1;}
+.chevron{width:14px;height:14px;color:var(--text-muted);transition:transform .3s ease;flex-shrink:0;}
+.step.open .chevron{transform:rotate(180deg);}
+.step-body{max-height:0;overflow:hidden;transition:max-height .35s ease, padding .35s ease;padding:0 18px;}
+.step.open .step-body{max-height:600px;padding:0 18px 20px;}
+.step-desc{font-size:13.5px;color:var(--text-muted);line-height:1.7;margin:0 0 16px;border-top:1px solid var(--line);padding-top:14px;}
+.prompt{margin-bottom:14px;}
+.prompt label{display:block;font-size:13px;color:var(--text-primary);margin-bottom:6px;font-weight:500;}
+textarea{width:100%;background:var(--bg-panel-hi);border:1px solid var(--line);border-radius:10px;color:var(--text-primary);font-family:'Inter',sans-serif;font-size:13.5px;padding:10px 12px;resize:vertical;min-height:64px;line-height:1.6;}
+textarea:focus{outline:none;border-color:var(--gold-dim);}
+textarea::placeholder{color:#5b5e85;}
+.mark-btn{margin-top:4px;background:none;border:1px solid var(--line);color:var(--text-muted);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.04em;padding:8px 14px;border-radius:8px;cursor:pointer;transition:all .25s ease;}
+.mark-btn.on{background:var(--gold);border-color:var(--gold);color:#12132a;}
+.mark-btn:hover{border-color:var(--gold-dim);}
+
+/* ---------- Gratitude log ---------- */
+.gratitude{margin-top:8px;background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px 18px 18px;}
+.gratitude h2{font-family:'Fraunces',serif;font-weight:500;font-size:19px;margin:0 0 4px;}
+.gratitude .step-en{margin-bottom:14px;}
+.g-input-row{display:flex;gap:8px;margin-bottom:14px;}
+.g-input-row input{flex:1;background:var(--bg-panel-hi);border:1px solid var(--line);border-radius:10px;color:var(--text-primary);font-size:13.5px;padding:10px 12px;font-family:'Inter',sans-serif;}
+.g-input-row input:focus{outline:none;border-color:var(--rose);}
+.g-add{background:var(--rose);border:none;color:#1b1230;font-weight:600;font-size:13px;padding:0 18px;border-radius:10px;cursor:pointer;}
+.g-list{display:flex;flex-direction:column;gap:8px;max-height:280px;overflow-y:auto;}
+.g-item{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-primary);line-height:1.6;border-bottom:1px solid var(--line);padding-bottom:8px;}
+.g-date{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--rose);flex-shrink:0;padding-top:2px;}
+.g-empty{color:var(--text-muted);font-size:13px;text-align:center;padding:14px 0;}
+.g-del{margin-left:auto;background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:15px;flex-shrink:0;line-height:1;}
+.g-del:hover{color:var(--rose);}
+
+
+/* ---------- v2: category management + daily practice ---------- */
+.daily-tools{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:6px 0 20px;}
+.daily-card{background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;cursor:pointer;transition:all .2s ease;}
+.daily-card:hover{border-color:var(--gold-dim);transform:translateY(-1px);}
+.daily-card .dc-kicker{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--rose);margin-bottom:8px;}
+.daily-card h3{font-family:'Fraunces',serif;font-size:17px;font-weight:500;margin:0 0 5px;}
+.daily-card p{font-size:11.5px;color:var(--text-muted);line-height:1.5;margin:0 0 12px;}
+.daily-card .dc-action{display:inline-block;color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:10.5px;}
+.category-tools{display:flex;justify-content:flex-end;gap:8px;margin:0 0 10px;}
+.category-tool{background:none;border:1px solid var(--line);color:var(--text-muted);font-family:'IBM Plex Mono',monospace;font-size:10.5px;padding:7px 10px;border-radius:8px;cursor:pointer;}
+.category-tool:hover{border-color:var(--gold-dim);color:var(--gold);}
+.cat-card.long-pressed{border-color:var(--gold);box-shadow:0 0 0 2px rgba(228,185,79,.12);}
+.cat-card.editing{cursor:grab;position:relative;}
+.cat-card.editing:active{cursor:grabbing;}
+.cat-delete{position:absolute;right:9px;top:8px;width:22px;height:22px;border-radius:50%;border:1px solid var(--line);background:var(--bg-panel-hi);color:var(--rose);cursor:pointer;}
+.category-manager{background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin:0 0 16px;}
+.cm-title{font-family:'Fraunces',serif;font-size:18px;margin-bottom:12px;}
+.cm-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);}
+.cm-row:last-child{border-bottom:none;}
+.cm-name{flex:1;font-size:13px;}
+.cm-btn{background:none;border:1px solid var(--line);color:var(--text-muted);border-radius:7px;padding:6px 9px;font-size:10.5px;cursor:pointer;}
+.cm-btn:hover{border-color:var(--gold-dim);color:var(--gold);}
+.cm-empty{color:var(--text-muted);font-size:12px;padding:5px 0 10px;}
+.manifest-config{background:var(--bg-panel-hi);border:1px solid var(--gold-dim);border-radius:10px;padding:12px;margin-top:10px;}
+.manifest-config label{display:block;color:var(--text-muted);font-size:11px;margin-bottom:7px;}
+.manifest-config select{width:100%;background:var(--bg-panel);border:1px solid var(--line);color:var(--text-primary);border-radius:8px;padding:8px;font-size:12px;}
+.timer-screen{text-align:center;padding:30px 10px 10px;}
+.timer-time{font-family:'IBM Plex Mono',monospace;font-size:48px;color:var(--gold);letter-spacing:.04em;margin:18px 0;}
+.timer-vision{font-family:'Fraunces',serif;font-size:24px;margin-bottom:8px;}
+.timer-hint{color:var(--text-muted);font-size:12.5px;line-height:1.6;}
+.timer-sound{color:var(--rose);font-family:'IBM Plex Mono',monospace;font-size:10.5px;margin-top:12px;}
+.timer-actions{display:flex;justify-content:center;gap:10px;margin-top:22px;}
+.timer-actions button{background:none;border:1px solid var(--line);color:var(--text-muted);padding:9px 16px;border-radius:9px;font-size:12px;cursor:pointer;}
+.timer-actions .primary{background:var(--gold);border-color:var(--gold);color:#12132a;font-weight:600;}
+.exercise-box{margin-top:12px;}
+.exercise-box textarea{min-height:150px;}
+@media(max-width:620px){.daily-tools{grid-template-columns:1fr;}}
+
+.footer-note{text-align:center;color:var(--text-muted);font-size:11.5px;margin-top:24px;font-family:'IBM Plex Mono',monospace;}
+
+/* ---------- Bottom nav ---------- */
+.bottom-nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-around;
+  height:66px;padding-bottom:env(safe-area-inset-bottom,0);
+  background:rgba(20,21,45,0.94);
+  backdrop-filter:blur(16px);
+  border-top:1px solid var(--line);
+}
+.nav-item{
+  background:none;border:none;color:var(--text-muted);
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  cursor:pointer;flex:1;height:100%;justify-content:center;
+  transition:color .2s ease;
+}
+.nav-item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8;transition:all .2s ease;}
+.nav-item.active{color:var(--gold);}
+
+.nav-center{justify-content:flex-start;padding-top:0;margin-top:-24px;}
+.nav-center .center-circle{
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(150deg,var(--gold),#c99a2e);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 16px rgba(228,185,79,.4), 0 0 0 5px var(--bg-deep);
+  margin-bottom:5px;transition:transform .2s ease;
+}
+.nav-center.active .center-circle{transform:scale(1.06);}
+.nav-center .center-circle svg{width:24px;height:24px;stroke:#12132a;stroke-width:2;}
+.nav-center span{color:var(--text-muted);}
+.nav-center.active span{color:var(--gold);}
+
+/* ---------- Profile / 我的 ---------- */
+.profile-header{display:flex;flex-direction:column;align-items:center;text-align:center;padding:6px 0 26px;}
+.avatar{
+  width:72px;height:72px;border-radius:50%;
+  background:linear-gradient(150deg,var(--gold),#c99a2e);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fraunces',serif;font-size:26px;color:#12132a;
+  margin-bottom:12px;
+}
+.profile-name{font-family:'Fraunces',serif;font-size:20px;font-weight:500;margin-bottom:4px;cursor:pointer;}
+.profile-name:hover{color:var(--gold);}
+.profile-sub{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-muted);}
+
+.settings-group{margin-top:20px;}
+.settings-group-label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--text-muted);letter-spacing:.06em;margin:0 0 8px 4px;text-transform:uppercase;}
+.settings-list{background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+.settings-row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line);cursor:pointer;}
+.settings-row:last-child{border-bottom:none;}
+.settings-row .sr-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
+.settings-row .sr-label{flex:1;font-size:13.5px;}
+.settings-row .sr-value{font-size:11.5px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;}
+.settings-row .sr-chevron{width:13px;height:13px;color:var(--text-muted);flex-shrink:0;}
+.settings-row.soon .sr-label{opacity:.55;}
+.settings-row.soon .sr-value{opacity:.55;}
+.settings-row.danger .sr-label{color:var(--rose);}
+
+.toggle{width:38px;height:22px;border-radius:999px;background:var(--line);position:relative;cursor:pointer;transition:background .2s ease;flex-shrink:0;}
+.toggle.on{background:var(--gold);}
+.toggle .knob{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--text-primary);transition:transform .2s ease;}
+.toggle.on .knob{transform:translateX(16px);background:#12132a;}
+
+/* ---------- Gratitude: quick entry + calendar ---------- */
+.quick-entry{background:var(--bg-panel);border:1px solid var(--gold-dim);border-radius:var(--radius);padding:18px;margin-bottom:20px;}
+.qe-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.04em;margin-bottom:10px;}
+.quick-entry textarea{min-height:76px;}
+.qe-hint{font-size:11px;color:var(--text-muted);margin-top:10px;text-align:right;cursor:pointer;}
+.qe-hint:hover{color:var(--gold);}
+
+.calendar{background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 16px 18px;}
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.cal-title{font-family:'Fraunces',serif;font-size:16px;font-weight:500;}
+.cal-nav-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px 10px;font-size:15px;}
+.cal-nav-btn:hover{color:var(--gold);}
+.cal-nav-btn:disabled{opacity:.25;cursor:default;}
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);margin-bottom:6px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cal-cell{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;font-size:12.5px;color:var(--text-primary);transition:background .2s ease;}
+.cal-cell.blank{cursor:default;}
+.cal-cell.future{cursor:default;color:var(--text-muted);opacity:.35;}
+.cal-cell:not(.blank):not(.future):hover{background:var(--bg-panel-hi);}
+.cal-cell.today{border:1px solid var(--gold-dim);}
+.cal-cell .dot{width:4px;height:4px;border-radius:50%;background:var(--gold);margin-top:3px;}
+
+.book-wrap{perspective:1400px;}
+.diary-page{
+  background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px 18px; transform:rotateY(0deg); opacity:1;
+  transition:transform .26s ease, opacity .26s ease;
+}
+.diary-page.no-anim{transition:none !important;}
+.diary-page.out.fwd{transform:rotateY(-90deg);opacity:0;transform-origin:left center;}
+.diary-page.out.back{transform:rotateY(90deg);opacity:0;transform-origin:right center;}
+.dp-back{background:none;border:none;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer;margin-bottom:14px;}
+.dp-back:hover{color:var(--gold);}
+.dp-date{font-family:'Fraunces',serif;font-size:19px;font-weight:500;text-align:center;}
+.dp-weekday{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--text-muted);text-align:center;margin-top:2px;margin-bottom:16px;}
+.dp-nav{display:flex;justify-content:space-between;margin-top:16px;}
+.dp-nav button{background:none;border:1px solid var(--line);color:var(--text-muted);border-radius:8px;padding:8px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer;}
+.dp-nav button:hover:not(:disabled){border-color:var(--gold-dim);color:var(--gold);}
+.dp-nav button:disabled{opacity:.3;cursor:default;}
+</style>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#f7f1e8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="显化旅程">
+<link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+<div class="wrap">
+  <div id="topArea"></div>
+  <div class="crumbs" id="crumbs"></div>
+  <div id="main"></div>
+  <div class="footer-note" id="footerNote">你的记录仅保存在你自己的设备账户中 · Powered by Manifest</div>
+</div>
+
+<nav class="bottom-nav">
+  <button class="nav-item" data-tab="gratitude">
+    <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-9.5-8.7C.8 8.4 2.4 4.7 6 4.7c2 0 3.5 1.2 6 4 2.5-2.8 4-4 6-4 3.6 0 5.2 3.7 3.5 7.3C19 16.65 12 21 12 21z"/></svg>
+    <span>感恩日记</span>
+  </button>
+  <button class="nav-item nav-center" data-tab="home">
+    <div class="center-circle">
+      <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>
+    </div>
+    <span>首页</span>
+  </button>
+  <button class="nav-item" data-tab="me">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+    <span>我的</span>
+  </button>
+</nav>
+
+<script>
+let CATEGORIES = [
+  {id:'wealth', cn:'财富', en:'Wealth', icon:'💰'},
+  {id:'love', cn:'爱情', en:'Love', icon:'💗'},
+  {id:'career', cn:'事业', en:'Career', icon:'💼'},
+  {id:'study', cn:'学业', en:'Study', icon:'📚'},
+  {id:'health', cn:'健康', en:'Health', icon:'🌿'},
+  {id:'relationship', cn:'人际关系', en:'Relationships', icon:'🤝'},
+  {id:'growth', cn:'个人成长', en:'Growth', icon:'🌱'},
+  {id:'other', cn:'其他', en:'Other', icon:'✦'}
+];
+
+const PRESET_VISIONS = {
+  wealth: ['希望涨薪','希望增加副业收入','希望存到第一桶金','希望实现财务自由','希望还清债务'],
+  love: ['希望找到合适的伴侣','希望修复现在的感情','希望关系更亲密','希望走入婚姻','希望结束一段消耗自己的关系'],
+  career: ['希望升职','希望换到理想的工作','希望创业成功','希望获得领导认可','希望改善职场关系'],
+  study: ['希望考试通过','希望考出高分','希望顺利毕业','希望申请到理想的学校','希望学会一项新技能'],
+  health: ['希望改善睡眠','希望养成运动习惯','希望恢复身体健康','希望达成体重目标','希望情绪更稳定'],
+  relationship: ['希望修复家庭关系','希望交到新朋友','希望被理解和看见','希望减少冲突','希望建立健康的边界感'],
+  growth: ['希望更自信','希望克服拖延','希望活得更真实','希望培养新习惯','希望内心更平静'],
+  other: []
+};
+
+const STEPS = [
+  {cn:"保持愿景清晰", en:"Be Clear in Your Vision",
+   desc:"先把它具体化、视觉化。愿景越清晰，你的潜意识与行动就越容易朝它对齐。",
+   prompts:[
+     {key:"vision1", label:"用现在时态、尽可能具体地描述这个愿景实现时的画面：", ph:"例如：我正在……"},
+     {key:"vision2", label:"愿景实现之后，你会有什么感受？", ph:"写下那种感受……"}
+   ]},
+  {cn:"消除恐惧和怀疑", en:"Remove Fear and Doubt",
+   desc:"恐惧和怀疑会悄悄破坏显化的能量。把它们写下来，是把它们从潜意识里请出来的第一步。",
+   prompts:[
+     {key:"fear1", label:"是什么让你怀疑这个愿景不会实现？这份恐惧最初从哪里来？", ph:"写下你的怀疑……"},
+     {key:"fear2", label:"如果你完全不再害怕，你今天会做出什么不同的选择？", ph:"……"}
+   ]},
+  {cn:"使行为与愿景一致", en:"Align Your Behaviour",
+   desc:"显化不是被动等待，而是像你已经拥有它的那个人一样去生活和行动。",
+   prompts:[
+     {key:"align1", label:"列出三个今天就能做的、与这个愿景一致的具体行动：", ph:"1. …\n2. …\n3. …"},
+     {key:"align2", label:"有哪些旧习惯或旧身份，需要被放下？", ph:"……"}
+   ]},
+  {cn:"克服宇宙的考验", en:"Overcome Tests from the Universe",
+   desc:"追求愿景的路上几乎总会遇到挫折——它们不是终点，而是检验你是否真正准备好了。",
+   prompts:[
+     {key:"test1", label:"围绕这个愿景，最近遇到了什么挑战、拒绝或挫折？", ph:"……"},
+     {key:"test2", label:"这次考验教会了你什么，让你离目标更近了一步？", ph:"……"}
+   ]},
+  {cn:"毫无保留地拥抱感恩", en:"Embrace Gratitude (without caveats)",
+   desc:"感恩不是等结果出现之后才给的奖励，而是现在就要练习的心态——不加“但是”，不打折扣。",
+   prompts:[
+     {key:"grat1", label:"围绕这个愿景，写下一件此刻让你真心感恩的事，不加“但是”：", ph:"……"},
+     {key:"grat2", label:"对这个尚未实现的愿望，提前表达感恩，就像它已经发生了：", ph:"……"}
+   ]},
+  {cn:"将嫉妒转化为鼓舞", en:"Turn Envy into Inspiration",
+   desc:"嫉妒不是坏事，它是路标——它精准地指出你内心真正渴望却还没敢承认的东西。",
+   prompts:[
+     {key:"envy1", label:"在这个领域，最近让你感到嫉妒或不舒服的人或事是什么？", ph:"……"},
+     {key:"envy2", label:"这份嫉妒揭示了你内心真正渴望的是什么？", ph:"……"}
+   ]},
+  {cn:"相信宇宙", en:"Trust in the Universe",
+   desc:"最后一步，也是最难的一步：放下对结果的执着控制，相信时机和方式会以最适合你的方式展开。",
+   prompts:[
+     {key:"trust1", label:"写下一件你曾经担忧，但最终自然而然解决了的事：", ph:"……"},
+     {key:"trust2", label:"关于这个愿景，今天你愿意放手、交给时间和宇宙的是什么？", ph:"……"}
+   ]}
+];
+
+// ---------- navigation state ----------
+let activeTab = 'home';         // 'home' | 'gratitude' | 'me'
+let nav = {view:'categories', categoryId:null, visionId:null};
+let visions = [];               // [{id, categoryId, title, desc, createdAt}]
+let stepState = {};             // stepState[visionId][stepIndex] = {done, answers}
+let profile = {nickname:'显化者', joined: null};
+let settings = {reminder:true};
+let hiddenCategories = [];
+let categoryOrder = [];
+let customCategoryCount = 0;
+let todayManifest = {duration:5, sound:'雨声'};
+let todayExercise = {text:''};
+let diary = {};                 // diary[dateKey] = text
+let calMonth = new Date();      // month currently shown in calendar
+let gratView = 'calendar';      // 'calendar' | 'book'
+let gratDate = null;            // date key currently open in book view
+
+// ---------- storage helpers ----------
+async function loadVisions(){
+  try{
+    const r = await window.storage.get('visions');
+    visions = r ? JSON.parse(r.value) : [];
+  }catch(e){ visions = []; }
+}
+async function saveVisions(){
+  try{ await window.storage.set('visions', JSON.stringify(visions)); }
+  catch(e){ console.error(e); }
+}
+async function loadStepsFor(visionId){
+  if(stepState[visionId]) return;
+  stepState[visionId] = {};
+  for(let i=0;i<STEPS.length;i++){
+    try{
+      const r = await window.storage.get('vstep-'+visionId+'-'+i);
+      stepState[visionId][i] = r ? JSON.parse(r.value) : {done:false, answers:{}};
+    }catch(e){ stepState[visionId][i] = {done:false, answers:{}}; }
+  }
+}
+async function saveStep(visionId, i){
+  try{ await window.storage.set('vstep-'+visionId+'-'+i, JSON.stringify(stepState[visionId][i])); }
+  catch(e){ console.error(e); }
+}
+async function deleteVisionData(visionId){
+  for(let i=0;i<STEPS.length;i++){
+    try{ await window.storage.delete('vstep-'+visionId+'-'+i); }catch(e){}
+  }
+}
+
+function visionProgress(visionId){
+  if(!stepState[visionId]) return 0;
+  return STEPS.filter((_,i)=>stepState[visionId][i] && Object.values(stepState[visionId][i].answers||{}).some(v=>String(v).trim())).length;
+}
+function hasStepRecord(visionId,i){
+  return !!(stepState[visionId] && stepState[visionId][i] && Object.values(stepState[visionId][i].answers||{}).some(v=>String(v).trim()));
+}
+
+// ---------- crumbs ----------
+function renderCrumbs(){
+  const el = document.getElementById('crumbs');
+  let html = `<span class="seg ${nav.view==='categories'?'current':''}" data-go="categories">首页</span>`;
+  if(nav.categoryId){
+    const cat = CATEGORIES.find(c=>c.id===nav.categoryId);
+    html += `<span class="sep">/</span><span class="seg ${nav.view==='visionList'?'current':''}" data-go="visionList">${cat.icon} ${cat.cn}</span>`;
+  }
+  if(nav.visionId){
+    const v = visions.find(v=>v.id===nav.visionId);
+    if(v) html += `<span class="sep">/</span><span class="seg current">${v.title}</span>`;
+  }
+  el.innerHTML = html;
+  el.querySelectorAll('.seg').forEach(s=>{
+    s.addEventListener('click', ()=>{
+      const go = s.getAttribute('data-go');
+      if(go==='categories'){ nav = {view:'categories', categoryId:null, visionId:null}; }
+      if(go==='visionList'){ nav.view='visionList'; nav.visionId=null; }
+      render();
+    });
+  });
+}
+
+// ---------- view: categories ----------
+function renderCategories(){
+  const main = document.getElementById('main');
+  const visible = CATEGORIES.filter(c=>!hiddenCategories.includes(c.id));
+  main.innerHTML = `
+    <div class="daily-tools">
+      <div class="daily-card" id="dailyManifestCard">
+        <div class="dc-kicker">TODAY · 显化练习</div>
+        <h3>今日显化</h3>
+        <p>花一段你自己设定的时间，想象你的愿景已经实现。</p>
+        <span class="dc-action">开始显化 · ${todayManifest.duration} 分钟 →</span>
+      </div>
+      <div class="daily-card" id="dailyExerciseCard">
+        <div class="dc-kicker">TODAY · 今日练习</div>
+        <h3>今日练习</h3>
+        <p>${todayExercise.text ? '继续今天的思考记录。' : '如果理想生活已经发生，今天的你会做什么？'}</p>
+        <span class="dc-action">${todayExercise.text ? '继续记录 →' : '开始练习 →'}</span>
+      </div>
+    </div>
+    <div class="category-tools">
+      <button class="category-tool" id="manageCategories">管理愿景分类</button>
+    </div>
+    <div id="categoryManager"></div>
+    <div class="cat-grid" id="catGrid">${visible.map(c=>{
+      const count = visions.filter(v=>v.categoryId===c.id).length;
+      return `<div class="cat-card" draggable="false" data-id="${c.id}">
+        <span class="cat-icon">${c.icon}</span>
+        <div class="cat-cn">${escapeHtml(c.cn)}</div>
+        <div class="cat-en">${escapeHtml(c.en)}</div>
+        <div class="cat-count ${count===0?'empty':''}">${count===0 ? '还没有愿景' : count+' 个愿景'}</div>
+      </div>`;
+    }).join('')}</div>
+  `;
+  bindCategoryCards(false);
+  document.getElementById('manageCategories').addEventListener('click', renderCategoryManager);
+  document.getElementById('dailyManifestCard').addEventListener('click', openManifestSetup);
+  document.getElementById('dailyExerciseCard').addEventListener('click', openTodayExercise);
+}
+
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function bindCategoryCards(editing){
+  const grid=document.getElementById('catGrid'); if(!grid)return;
+  grid.querySelectorAll('.cat-card').forEach(card=>{
+    const id=card.dataset.id;
+    if(editing){
+      card.classList.add('editing'); card.draggable=true;
+      card.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',id); card.classList.add('long-pressed');});
+      card.addEventListener('dragend',()=>card.classList.remove('long-pressed'));
+      card.addEventListener('dragover',e=>e.preventDefault());
+      card.addEventListener('drop',async e=>{e.preventDefault(); const from=e.dataTransfer.getData('text/plain'); await reorderCategory(from,id);});
+      let timer;
+      card.addEventListener('pointerdown',()=>{timer=setTimeout(()=>card.classList.add('long-pressed'),600);});
+      card.addEventListener('pointerup',()=>clearTimeout(timer));
+      card.addEventListener('pointerleave',()=>clearTimeout(timer));
+      const del=document.createElement('button'); del.className='cat-delete'; del.textContent='×'; del.title='隐藏';
+      del.addEventListener('click',async e=>{e.stopPropagation(); await hideCategory(id);}); card.appendChild(del);
+    }else{
+      card.addEventListener('click',()=>{nav={view:'visionList',categoryId:id,visionId:null};render();});
+    }
+  });
+}
+async function reorderCategory(fromId,toId){
+  const a=CATEGORIES.findIndex(c=>c.id===fromId), b=CATEGORIES.findIndex(c=>c.id===toId);
+  if(a<0||b<0||a===b)return;
+  const [x]=CATEGORIES.splice(a,1); CATEGORIES.splice(b,0,x); await saveCategories(); renderCategories(); renderCategoryManager();
+}
+async function hideCategory(id){
+  if(id==='other'){alert('“其他”是默认兜底分类，不能隐藏。');return;}
+  if(!hiddenCategories.includes(id)) hiddenCategories.push(id);
+  await saveCategories(); renderCategories(); renderCategoryManager();
+}
+async function restoreCategory(id){
+  hiddenCategories=hiddenCategories.filter(x=>x!==id); await saveCategories(); renderCategories(); renderCategoryManager();
+}
+function renderCategoryManager(){
+  const box=document.getElementById('categoryManager'); if(!box)return;
+  const hidden=CATEGORIES.filter(c=>hiddenCategories.includes(c.id));
+  box.innerHTML=`<div class="category-manager">
+    <div class="cm-title">管理愿景分类</div>
+    <div style="color:var(--text-muted);font-size:11.5px;line-height:1.6;margin-bottom:10px;">长按/拖动可调整顺序；隐藏分类不会删除其中任何愿景和七步记录。</div>
+    <div class="cm-row"><span class="cm-name">已隐藏分类</span><span class="cm-btn">${hidden.length} 个</span></div>
+    ${hidden.length?hidden.map(c=>`<div class="cm-row"><span class="cm-name">${c.icon} ${escapeHtml(c.cn)}</span><button class="cm-btn" data-restore="${c.id}">恢复</button></div>`).join(''):'<div class="cm-empty">暂无隐藏分类</div>'}
+    <div class="cm-row"><span class="cm-name">自定义分类 ${CATEGORIES.filter(c=>c.custom).length}/5</span><button class="cm-btn" id="addCustomCategory">＋ 新增</button></div>
+  </div>`;
+  box.querySelectorAll('[data-restore]').forEach(b=>b.addEventListener('click',()=>restoreCategory(b.dataset.restore)));
+  box.querySelector('#addCustomCategory').addEventListener('click',addCustomCategory);
+  bindCategoryCards(true);
+}
+async function addCustomCategory(){
+  const n=CATEGORIES.filter(c=>c.custom).length; if(n>=5){alert('最多可新增 5 个自定义愿景分类。');return;}
+  const cn=prompt('请输入分类名称，例如：旅行'); if(!cn||!cn.trim())return;
+  const en=prompt('请输入英文名称，例如：Travel')||'Custom';
+  const icon=prompt('请输入一个图标，例如：✈️')||'✦';
+  const id='custom_'+Date.now().toString(36);
+  CATEGORIES.push({id,cn:cn.trim(),en:en.trim(),icon,custom:true});
+  await saveCategories(); renderCategories(); renderCategoryManager();
+}
+async function saveCategories(){
+  try{await window.storage.set('categories',JSON.stringify(CATEGORIES)); await window.storage.set('category-meta',JSON.stringify({hidden:hiddenCategories}));}catch(e){console.error(e);}
+}
+async function loadCategories(){
+  try{const r=await window.storage.get('categories'); if(r)CATEGORIES=JSON.parse(r.value);}catch(e){}
+  try{const r=await window.storage.get('category-meta'); if(r)hiddenCategories=JSON.parse(r.value).hidden||[];}catch(e){hiddenCategories=[];}
+}
+
+// ---------- view: vision list ----------
+function renderVisionList(){
+  const main = document.getElementById('main');
+  const list = visions.filter(v=>v.categoryId===nav.categoryId);
+  const existingTitles = new Set(list.map(v=>v.title));
+  const presets = (PRESET_VISIONS[nav.categoryId] || []).filter(p=>!existingTitles.has(p));
+
+  main.innerHTML = `
+    ${presets.length>0 ? `
+    <div class="preset-block">
+      <div class="preset-label">推荐愿景 · 点击即可选择</div>
+      <div class="preset-chips" id="presetChips">
+        ${presets.map(p=>`<button class="chip" data-title="${p}">${p}</button>`).join('')}
+      </div>
+    </div>` : ''}
+    <div class="add-vision-row">
+      <input type="text" id="newVisionInput" placeholder="或输入自定义愿景，例如：希望我涨薪" />
+      <button id="newVisionAdd">添加</button>
+    </div>
+    <div class="vision-list" id="visionListEl">
+      ${list.length===0 ? '<div class="vision-empty">还没有愿景，从上面选一个，或自己写一个吧 ✦</div>' :
+        list.map(v=>{
+          const done = visionProgress(v.id);
+          return `<div class="vision-card" data-id="${v.id}">
+            <div class="vc-title">${v.title}</div>
+            <div class="vc-progress">${done}/7</div>
+            <button class="vc-del" data-id="${v.id}">×</button>
+          </div>`;
+        }).join('')}
+    </div>
+  `;
+  document.getElementById('newVisionAdd').addEventListener('click', ()=>addVision());
+  document.getElementById('newVisionInput').addEventListener('keydown', e=>{ if(e.key==='Enter') addVision(); });
+
+  if(document.getElementById('presetChips')){
+    document.getElementById('presetChips').querySelectorAll('.chip').forEach(chip=>{
+      chip.addEventListener('click', ()=> addVision(chip.getAttribute('data-title')));
+    });
+  }
+
+  main.querySelectorAll('.vision-card').forEach(card=>{
+    card.addEventListener('click', async (e)=>{
+      if(e.target.classList.contains('vc-del')) return;
+      const id = card.getAttribute('data-id');
+      await loadStepsFor(id);
+      nav = {view:'visionDetail', categoryId: nav.categoryId, visionId: id};
+      render();
+    });
+  });
+  main.querySelectorAll('.vc-del').forEach(btn=>{
+    btn.addEventListener('click', async (e)=>{
+      e.stopPropagation();
+      const id = btn.getAttribute('data-id');
+      if(!confirm('删除这个愿景及其所有记录？此操作无法撤销。')) return;
+      visions = visions.filter(v=>v.id!==id);
+      await saveVisions();
+      await deleteVisionData(id);
+      render();
+    });
+  });
+}
+
+async function addVision(presetTitle){
+  let title = presetTitle;
+  let goStraightIn = !!presetTitle;
+  if(!title){
+    const input = document.getElementById('newVisionInput');
+    title = input.value.trim();
+    if(!title) return;
+    input.value = '';
+  }
+  const v = {id: 'v'+Date.now()+Math.random().toString(36).slice(2,7), categoryId: nav.categoryId, title, desc:'', createdAt: new Date().toISOString()};
+  visions.push(v);
+  await saveVisions();
+  if(goStraightIn){
+    await loadStepsFor(v.id);
+    nav = {view:'visionDetail', categoryId: nav.categoryId, visionId: v.id};
+  }
+  render();
+}
+
+// ---------- view: vision detail ----------
+function renderConstellation(visionId){
+  const svg = document.getElementById('constellation');
+  if(!svg) return;
+  const n = STEPS.length;
+  const marginX = 50, w = 620 - marginX*2, y = 70;
+  const points = STEPS.map((_,i)=>({x: marginX + (w/(n-1))*i, y: y + (i%2===0 ? -18 : 18)}));
+  const st = stepState[visionId];
+  let html = '';
+  for(let i=0;i<n-1;i++){
+    const lit = hasStepRecord(visionId,i) && hasStepRecord(visionId,i+1);
+    html += `<line class="link ${lit?'lit':''}" x1="${points[i].x}" y1="${points[i].y}" x2="${points[i+1].x}" y2="${points[i+1].y}"/>`;
+  }
+  points.forEach((p,i)=>{
+    const lit = hasStepRecord(visionId,i);
+    html += `<circle class="star-halo ${lit?'lit':''}" cx="${p.x}" cy="${p.y}" r="16"/>`;
+    html += `<circle class="star ${lit?'lit':''}" data-i="${i}" cx="${p.x}" cy="${p.y}" r="7"/>`;
+    html += `<text class="${lit?'lit':''}" x="${p.x}" y="${p.y + (i%2===0? -26: 32)}" text-anchor="middle">${i+1}</text>`;
+  });
+  svg.innerHTML = html;
+  svg.querySelectorAll('.star').forEach(s=>{
+    s.addEventListener('click', ()=>{
+      const i = s.getAttribute('data-i');
+      document.querySelectorAll('.step')[i].scrollIntoView({behavior:'smooth', block:'center'});
+    });
+  });
+  const recordCount = STEPS.filter((_,i)=>hasStepRecord(visionId,i)).length;
+  document.getElementById('progressLabel').innerHTML = `<b>${recordCount}</b> / 7 个维度已有记录`;
+}
+
+function renderStepCards(visionId){
+  const container = document.getElementById('stepsEl');
+  const st = stepState[visionId];
+  container.innerHTML = '';
+  STEPS.forEach((step, i)=>{
+    const el = document.createElement('div');
+    el.className = 'step' + (hasStepRecord(visionId,i) ? ' done' : '');
+    el.innerHTML = `
+      <div class="step-head">
+        <div class="step-num">${String(i+1).padStart(2,'0')}</div>
+        <div class="step-titles">
+          <div class="step-cn">${step.cn}</div>
+          <div class="step-en">${step.en}</div>
+        </div>
+        <div class="step-check"><span style="font-size:10px;color:#12132a;">✦</span></div>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="step-body">
+        <p class="step-desc">${step.desc}</p>
+        ${step.prompts.map(p=>`
+          <div class="prompt">
+            <label>${p.label}</label>
+            <textarea data-key="${p.key}" placeholder="${p.ph}">${st[i].answers[p.key] || ''}</textarea>
+          </div>
+        `).join('')}
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--text-muted);margin-top:4px;">${hasStepRecord(visionId,i)?'已有记录 · 可随时回来继续修改':'还没有记录 · 你可以从任何一步开始'}</div>
+      </div>
+    `;
+    container.appendChild(el);
+
+    el.querySelector('.step-head').addEventListener('click', ()=> el.classList.toggle('open'));
+
+    el.querySelectorAll('textarea').forEach(ta=>{
+      ta.addEventListener('click', e=>e.stopPropagation());
+      ta.addEventListener('blur', async ()=>{
+        const key = ta.getAttribute('data-key');
+        st[i].answers[key] = ta.value;
+        await saveStep(visionId, i);
+        el.classList.toggle('done', hasStepRecord(visionId,i));
+        renderConstellation(visionId);
+      });
+    });
+
+  });
+}
+
+function renderVisionListCacheRefresh(){ /* progress numbers refresh when user returns to list; no-op here */ }
+
+function renderVisionDetail(){
+  const v = visions.find(v=>v.id===nav.visionId);
+  const main = document.getElementById('main');
+  main.innerHTML = `
+    <div class="vd-header">
+      <button class="vd-delete" id="vdDelete">删除这个愿景</button>
+      <h2 class="vd-title">${v.title}</h2>
+      <div class="vd-desc-wrap">
+        <label>详细描述这个愿景（越具体越好）</label>
+        <textarea id="vdDesc" placeholder="描述这个愿景实现时的具体画面、数字、时间……">${v.desc||''}</textarea>
+      </div>
+    </div>
+    <svg class="constellation" viewBox="0 0 620 140" id="constellation"></svg>
+    <div class="progress-label" id="progressLabel"></div>
+    <div class="steps" id="stepsEl"></div>
+  `;
+  document.getElementById('vdDesc').addEventListener('blur', async (e)=>{
+    v.desc = e.target.value;
+    await saveVisions();
+  });
+  document.getElementById('vdDelete').addEventListener('click', async ()=>{
+    if(!confirm('删除这个愿景及其所有记录？此操作无法撤销。')) return;
+    visions = visions.filter(x=>x.id!==v.id);
+    await saveVisions();
+    await deleteVisionData(v.id);
+    nav = {view:'visionList', categoryId: nav.categoryId, visionId:null};
+    render();
+  });
+  renderConstellation(v.id);
+  renderStepCards(v.id);
+}
+
+// ---------- top area (hero / profile header) ----------
+function renderTopArea(){
+  const el = document.getElementById('topArea');
+  if(activeTab==='home'){
+    el.innerHTML = `
+      <div class="hero">
+        <div class="eyebrow">MANIFEST · 七步显化法</div>
+        <h1>显化旅程</h1>
+        <p class="sub">改编自 Roxie Nafousi《显化》(Manifest) 七个步骤 — 为每一个具体愿景，单独记录你的清晰、疑虑、行动与感恩。</p>
+      </div>`;
+  } else if(activeTab==='gratitude'){
+    el.innerHTML = `
+      <div class="hero">
+        <div class="eyebrow">STEP 5 · 拥抱感恩</div>
+        <h1>感恩日记</h1>
+        <p class="sub">不加"但是"，不打折扣。每天记录一件真心感恩的事。</p>
+      </div>`;
+  } else if(activeTab==='me'){
+    el.innerHTML = `
+      <div class="profile-header">
+        <div class="avatar" id="avatarBtn">${(profile.nickname||'显')[0]}</div>
+        <div class="profile-name" id="nicknameBtn">${profile.nickname}</div>
+        <div class="profile-sub">${profile.joined ? '显化之旅始于 ' + fmtDateFull(profile.joined) : ''}</div>
+      </div>`;
+    document.getElementById('nicknameBtn').addEventListener('click', async ()=>{
+      const next = prompt('设置你的昵称', profile.nickname);
+      if(next && next.trim()){
+        profile.nickname = next.trim();
+        await saveProfile();
+        renderTopArea();
+      }
+    });
+  }
+}
+
+// ---------- me / 我的 ----------
+async function loadProfile(){
+  try{
+    const r = await window.storage.get('profile');
+    profile = r ? JSON.parse(r.value) : {nickname:'显化者', joined:new Date().toISOString()};
+  }catch(e){ profile = {nickname:'显化者', joined:new Date().toISOString()}; }
+  if(!profile.joined){ profile.joined = new Date().toISOString(); await saveProfile(); }
+}
+async function saveProfile(){
+  try{ await window.storage.set('profile', JSON.stringify(profile)); }catch(e){}
+}
+async function loadSettings(){
+  try{
+    const r = await window.storage.get('settings');
+    settings = r ? JSON.parse(r.value) : {reminder:true};
+  }catch(e){ settings = {reminder:true}; }
+}
+async function saveSettings(){
+  try{ await window.storage.set('settings', JSON.stringify(settings)); }catch(e){}
+}
+function fmtDateFull(d){ const dt = new Date(d); return `${dt.getFullYear()}/${dt.getMonth()+1}/${dt.getDate()}`; }
+function chevronSvg(){ return `<svg class="sr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>`; }
+
+function renderMe(){
+  const main = document.getElementById('main');
+  main.innerHTML = `
+    <div class="settings-group">
+      <div class="settings-group-label">账号信息</div>
+      <div class="settings-list">
+        <div class="settings-row soon"><span class="sr-icon">📊</span><span class="sr-label">显化统计</span><span class="sr-value">敬请期待</span></div>
+        <div class="settings-row soon"><span class="sr-icon">🎁</span><span class="sr-label">商城兑换</span><span class="sr-value">敬请期待</span></div>
+        <div class="settings-row soon"><span class="sr-icon">🏅</span><span class="sr-label">成就徽章</span><span class="sr-value">敬请期待</span></div>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <div class="settings-group-label">设置</div>
+      <div class="settings-list">
+        <div class="settings-row" id="reminderRow">
+          <span class="sr-icon">🔔</span><span class="sr-label">每日提醒</span>
+          <div class="toggle ${settings.reminder?'on':''}" id="reminderToggle"><div class="knob"></div></div>
+        </div>
+        <div class="settings-row soon"><span class="sr-icon">🔒</span><span class="sr-label">隐私与权限</span>${chevronSvg()}</div>
+        <div class="settings-row soon"><span class="sr-icon">🌐</span><span class="sr-label">语言</span><span class="sr-value">简体中文</span></div>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <div class="settings-group-label">支持</div>
+      <div class="settings-list">
+        <div class="settings-row soon"><span class="sr-icon">💬</span><span class="sr-label">意见反馈</span>${chevronSvg()}</div>
+        <div class="settings-row soon"><span class="sr-icon">ℹ️</span><span class="sr-label">关于显化旅程</span><span class="sr-value">v1.0</span></div>
+        <div class="settings-row danger" id="clearDataRow"><span class="sr-icon">🗑</span><span class="sr-label">清除本地数据</span>${chevronSvg()}</div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('reminderRow').addEventListener('click', async ()=>{
+    settings.reminder = !settings.reminder;
+    await saveSettings();
+    renderMe();
+  });
+
+  document.getElementById('clearDataRow').addEventListener('click', async ()=>{
+    if(!confirm('将清除所有愿景、步骤记录与感恩日记，此操作无法撤销，确定继续吗？')) return;
+    try{
+      for(const v of visions){ await deleteVisionData(v.id); }
+      await window.storage.delete('visions');
+      await window.storage.delete('gratitude-log');
+    }catch(e){}
+    visions = [];
+    stepState = {};
+    nav = {view:'categories', categoryId:null, visionId:null};
+    alert('本地数据已清除');
+    renderMe();
+  });
+}
+
+// ---------- main render dispatcher ----------
+function render(){
+  renderTopArea();
+  document.querySelectorAll('.nav-item').forEach(b=>{
+    b.classList.toggle('active', b.getAttribute('data-tab')===activeTab);
+  });
+  document.getElementById('footerNote').style.display = activeTab==='me' ? 'none' : 'block';
+
+  if(activeTab==='home'){
+    document.getElementById('crumbs').style.display = '';
+    renderCrumbs();
+    if(nav.view==='categories') renderCategories();
+    else if(nav.view==='visionList') renderVisionList();
+    else if(nav.view==='visionDetail') renderVisionDetail();
+  } else if(activeTab==='gratitude'){
+    document.getElementById('crumbs').style.display = 'none';
+    renderGratitudeTab();
+  } else if(activeTab==='me'){
+    document.getElementById('crumbs').style.display = 'none';
+    renderMe();
+  }
+}
+
+document.querySelectorAll('.nav-item').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    activeTab = btn.getAttribute('data-tab');
+    render();
+  });
+});
+
+// ---------- gratitude diary (date-keyed, global) ----------
+function dateKey(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function parseKey(k){ const [y,m,d] = k.split('-').map(Number); return new Date(y, m-1, d); }
+function todayKeyStr(){ return dateKey(new Date()); }
+function shiftKey(k, delta){ const d = parseKey(k); d.setDate(d.getDate()+delta); return dateKey(d); }
+
+async function loadDiary(){
+  try{
+    const r = await window.storage.get('gratitude-diary');
+    if(r){ diary = JSON.parse(r.value); return; }
+  }catch(e){}
+  diary = {};
+  // one-time migration from the older list-based gratitude log, if present
+  try{
+    const old = await window.storage.get('gratitude-log');
+    if(old){
+      const list = JSON.parse(old.value);
+      list.forEach(item=>{
+        const key = dateKey(new Date(item.date));
+        diary[key] = diary[key] ? diary[key] + '\n' + item.text : item.text;
+      });
+      if(Object.keys(diary).length>0) await saveDiary();
+    }
+  }catch(e){}
+}
+async function saveDiary(){
+  try{ await window.storage.set('gratitude-diary', JSON.stringify(diary)); }
+  catch(e){ console.error(e); }
+}
+
+function renderGratitudeTab(){
+  if(gratView==='book') renderBookView();
+  else renderCalendarView();
+}
+
+function renderCalendarView(){
+  const main = document.getElementById('main');
+  const today = todayKeyStr();
+  const year = calMonth.getFullYear(), month = calMonth.getMonth();
+  const first = new Date(year, month, 1);
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const lead = (first.getDay()+6)%7; // Monday-start
+  const isCurrentRealMonth = (year===new Date().getFullYear() && month===new Date().getMonth());
+
+  let cells = '';
+  for(let i=0;i<lead;i++) cells += `<div class="cal-cell blank"></div>`;
+  for(let d=1; d<=daysInMonth; d++){
+    const key = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isFuture = key > today;
+    const hasEntry = !!diary[key];
+    cells += `<div class="cal-cell ${isFuture?'future':''} ${key===today?'today':''}" ${isFuture?'':`data-key="${key}"`}>
+      <span>${d}</span>${hasEntry?'<div class="dot"></div>':''}
+    </div>`;
+  }
+
+  main.innerHTML = `
+    <div class="quick-entry">
+      <div class="qe-label">今天 · ${parseKey(today).getMonth()+1}月${parseKey(today).getDate()}日</div>
+      <textarea id="qeText" placeholder='今天有什么值得感恩的事（不加"但是"）？'>${diary[today]||''}</textarea>
+      <div class="qe-hint" id="qeToBook">在日记本中查看 →</div>
+    </div>
+    <div class="calendar">
+      <div class="cal-header">
+        <button class="cal-nav-btn" id="calPrev">‹</button>
+        <div class="cal-title">${year}年${month+1}月</div>
+        <button class="cal-nav-btn" id="calNext" ${isCurrentRealMonth?'disabled':''}>›</button>
+      </div>
+      <div class="cal-weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+      <div class="cal-grid">${cells}</div>
+    </div>
+  `;
+
+  document.getElementById('qeText').addEventListener('blur', async (e)=>{
+    const val = e.target.value;
+    if(val.trim()) diary[today] = val; else delete diary[today];
+    await saveDiary();
+    renderCalendarView();
+  });
+  document.getElementById('qeToBook').addEventListener('click', ()=> openBook(today));
+
+  document.getElementById('calPrev').addEventListener('click', ()=>{
+    calMonth = new Date(year, month-1, 1);
+    renderCalendarView();
+  });
+  document.getElementById('calNext').addEventListener('click', ()=>{
+    if(isCurrentRealMonth) return;
+    calMonth = new Date(year, month+1, 1);
+    renderCalendarView();
+  });
+  main.querySelectorAll('.cal-cell[data-key]').forEach(cell=>{
+    cell.addEventListener('click', ()=> openBook(cell.getAttribute('data-key')));
+  });
+}
+
+function openBook(key){
+  gratDate = key;
+  gratView = 'book';
+  render();
+}
+
+function renderBookView(){
+  const main = document.getElementById('main');
+  main.innerHTML = `
+    <div class="book-wrap">
+      <div class="diary-page" id="diaryPage">
+        <button class="dp-back" id="dpBack">← 返回日历</button>
+        <div class="dp-date" id="dpDate"></div>
+        <div class="dp-weekday" id="dpWeekday"></div>
+        <textarea id="dpText" placeholder='今天有什么值得感恩的事（不加"但是"）？' style="min-height:180px;"></textarea>
+        <div class="dp-nav">
+          <button id="dpPrev">‹ 前一天</button>
+          <button id="dpNext">后一天 ›</button>
+        </div>
+      </div>
+    </div>
+  `;
+  fillBookContent(gratDate);
+
+  document.getElementById('dpText').addEventListener('blur', saveCurrentDiaryText);
+  document.getElementById('dpBack').addEventListener('click', async ()=>{
+    await saveCurrentDiaryText();
+    gratView = 'calendar';
+    render();
+  });
+  document.getElementById('dpPrev').addEventListener('click', ()=> flipTo(shiftKey(gratDate,-1), 'back'));
+  document.getElementById('dpNext').addEventListener('click', ()=>{
+    if(gratDate >= todayKeyStr()) return;
+    flipTo(shiftKey(gratDate,1), 'fwd');
+  });
+}
+
+function fillBookContent(key){
+  const d = parseKey(key);
+  const weekdayNames = ['周日','周一','周二','周三','周四','周五','周六'];
+  document.getElementById('dpDate').textContent = `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
+  document.getElementById('dpWeekday').textContent = weekdayNames[d.getDay()];
+  document.getElementById('dpText').value = diary[key] || '';
+  document.getElementById('dpNext').disabled = key >= todayKeyStr();
+}
+
+async function saveCurrentDiaryText(){
+  const ta = document.getElementById('dpText');
+  if(!ta) return;
+  const val = ta.value;
+  if(val.trim()) diary[gratDate] = val; else delete diary[gratDate];
+  await saveDiary();
+}
+
+async function flipTo(newKey, dir){
+  await saveCurrentDiaryText();
+  const page = document.getElementById('diaryPage');
+  page.classList.add('out', dir);
+  setTimeout(()=>{
+    gratDate = newKey;
+    fillBookContent(newKey);
+    page.classList.add('no-anim');
+    page.classList.remove('fwd','back');
+    page.classList.add(dir==='fwd' ? 'back' : 'fwd');
+    void page.offsetWidth;
+    page.classList.remove('no-anim');
+    requestAnimationFrame(()=>{
+      page.classList.remove('out','fwd','back');
+    });
+  }, 260);
+}
+
+
+// ---------- daily manifestation + exercise ----------
+function openManifestSetup(){
+  const main=document.getElementById('main');
+  main.innerHTML=`<div class="vd-header"><button class="vd-delete" id="dailyBack">← 返回首页</button><h2 class="vd-title">今日显化</h2><div class="vd-desc-wrap"><label>先设置今天想花多少时间</label><div class="manifest-config"><label>显化时长</label><select id="manifestDuration">${[1,3,5,10,15,20,30].map(x=>`<option value="${x}" ${todayManifest.duration===x?'selected':''}>${x} 分钟</option>`).join('')}</select><label style="margin-top:10px;">声音</label><select id="manifestSound"><option ${todayManifest.sound==='雨声'?'selected':''}>雨声</option><option ${todayManifest.sound==='海浪'?'selected':''}>海浪</option><option ${todayManifest.sound==='森林'?'selected':''}>森林</option><option ${todayManifest.sound==='轻音乐'?'selected':''}>轻音乐</option></select></div></div><div class="vision-list">${visions.length?visions.map(v=>`<div class="vision-card" data-manifest-vision="${v.id}"><div class="vc-title">${escapeHtml(v.title)}</div><div class="vc-progress">开始 →</div></div>`).join(''):'<div class="vision-empty">先创建一个愿景，再开始今日显化。</div>'}</div></div>`;
+  document.getElementById('dailyBack').addEventListener('click',()=>render());
+  document.getElementById('manifestDuration').addEventListener('change',async e=>{todayManifest.duration=Number(e.target.value);await saveDailyState();});
+  document.getElementById('manifestSound').addEventListener('change',async e=>{todayManifest.sound=e.target.value;await saveDailyState();});
+  main.querySelectorAll('[data-manifest-vision]').forEach(el=>el.addEventListener('click',()=>startManifestation(el.dataset.manifestVision)));
+}
+function startManifestation(visionId){
+  const v=visions.find(x=>x.id===visionId); if(!v)return;
+  let total=todayManifest.duration*60, left=total, timer=null, running=false;
+  const main=document.getElementById('main');
+  const tick=()=>{const el=document.getElementById('timerTime'); if(el)el.textContent=`${String(Math.floor(left/60)).padStart(2,'0')}:${String(left%60).padStart(2,'0')}`;};
+  main.innerHTML=`<div class="timer-screen"><button class="dp-back" id="timerBack">← 返回设置</button><div class="timer-vision">${escapeHtml(v.title)}</div><div class="timer-hint">闭上眼睛，想象它已经实现。<br>感受那个时候的自己。</div><div class="timer-time" id="timerTime"></div><div class="timer-sound">♪ ${todayManifest.sound} · 计时期间播放</div><div class="timer-actions"><button id="timerPause">暂停</button><button class="primary" id="timerStart">开始</button></div></div>`;
+  tick();
+  document.getElementById('timerBack').addEventListener('click',()=>openManifestSetup());
+  document.getElementById('timerStart').addEventListener('click',()=>{if(running)return;running=true;document.getElementById('timerStart').textContent='进行中';timer=setInterval(()=>{left--;tick();if(left<=0){clearInterval(timer);finishManifestation(v);}},1000);});
+  document.getElementById('timerPause').addEventListener('click',()=>{if(timer){clearInterval(timer);timer=null;}running=false;document.getElementById('timerStart').textContent='继续';});
+}
+async function finishManifestation(v){
+  const mins=todayManifest.duration;
+  try{let r=await window.storage.get('manifest-history');let arr=r?JSON.parse(r.value):[];arr.push({date:todayKeyStr(),visionId:v.id,visionTitle:v.title,duration:mins,sound:todayManifest.sound,createdAt:new Date().toISOString()});await window.storage.set('manifest-history',JSON.stringify(arr));}catch(e){}
+  const main=document.getElementById('main');main.innerHTML=`<div class="diary-page"><div class="dp-date">今日显化完成</div><div class="dp-weekday" style="margin-bottom:20px;">今天，花 ${mins} 分钟想象「${escapeHtml(v.title)}」已经实现。</div><p style="text-align:center;color:var(--text-muted);font-size:13px;line-height:1.7;">这不是一个终点。明天，你仍然可以再次回来。</p><div style="text-align:center;margin-top:22px;"><button class="mark-btn on" id="manifestDoneBack">返回首页</button></div></div>`;
+  document.getElementById('manifestDoneBack').addEventListener('click',()=>render());
+}
+function openTodayExercise(){
+  const main=document.getElementById('main');
+  main.innerHTML=`<div class="vd-header"><button class="vd-delete" id="exerciseBack">← 返回首页</button><h2 class="vd-title">今日练习</h2><div class="vd-desc-wrap"><label>如果你已经拥有理想的生活，今天的你会做出什么不同的选择？</label><div class="exercise-box"><textarea id="exerciseText" placeholder="写下今天的答案……">${escapeHtml(todayExercise.text)}</textarea></div><div style="text-align:right;margin-top:8px;font-size:10.5px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;">自动保存</div></div></div>`;
+  document.getElementById('exerciseBack').addEventListener('click',()=>render());
+  document.getElementById('exerciseText').addEventListener('blur',async e=>{todayExercise.text=e.target.value;await saveDailyState();});
+}
+async function saveDailyState(){try{await window.storage.set('daily-state',JSON.stringify({todayManifest,todayExercise}));}catch(e){}}
+async function loadDailyState(){try{const r=await window.storage.get('daily-state');if(r){const x=JSON.parse(r.value);todayManifest=x.todayManifest||todayManifest;todayExercise=x.todayExercise||todayExercise;}}catch(e){}}
+
+// ---------- init ----------
+(async function init(){
+  await loadCategories();
+  await loadVisions();
+  await loadDailyState();
+  await loadProfile();
+  await loadSettings();
+  await loadDiary();
+  render();
+})();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
+</script></body>
+</html>
