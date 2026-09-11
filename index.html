@@ -45,16 +45,6 @@ body{
 h1{font-family:'Fraunces',serif;font-weight:500;font-size:34px;margin:0 0 6px;letter-spacing:-0.01em;}
 .sub{color:var(--text-muted);font-size:14px;margin:0 0 8px;line-height:1.6;}
 
-/* ---------- Breadcrumb / back ---------- */
-.crumbs{
-  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
-  font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--text-muted);
-  margin:18px 0 18px;
-}
-.crumbs .seg{cursor:pointer;transition:color .2s ease;}
-.crumbs .seg:hover{color:var(--gold);}
-.crumbs .seg.current{color:var(--text-primary);cursor:default;}
-.crumbs .sep{color:var(--line);}
 
 /* ---------- Category grid ---------- */
 .cat-grid{
@@ -182,8 +172,8 @@ textarea::placeholder{color:#5b5e85;}
 .g-del:hover{color:var(--rose);}
 
 
-/* ---------- v2: category management + daily practice ---------- */
-.daily-tools{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:6px 0 20px;}
+/* ---------- category management + daily practice ---------- */
+.daily-tools{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0 20px;}
 .daily-card{background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;cursor:pointer;transition:all .2s ease;}
 .daily-card:hover{border-color:var(--gold-dim);transform:translateY(-1px);}
 .daily-card .dc-kicker{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--rose);margin-bottom:8px;}
@@ -227,33 +217,16 @@ textarea::placeholder{color:#5b5e85;}
   position:fixed;left:0;right:0;bottom:0;z-index:50;
   display:flex;align-items:center;justify-content:space-around;
   height:66px;padding-bottom:env(safe-area-inset-bottom,0);
-  background:rgba(20,21,45,0.94);
-  backdrop-filter:blur(16px);
-  border-top:1px solid var(--line);
+  background:rgba(20,21,45,0.94);backdrop-filter:blur(16px);border-top:1px solid var(--line);
 }
 .nav-item{
   background:none;border:none;color:var(--text-muted);
-  display:flex;flex-direction:column;align-items:center;gap:4px;
-  font-family:'IBM Plex Mono',monospace;font-size:10px;
-  cursor:pointer;flex:1;height:100%;justify-content:center;
-  transition:color .2s ease;
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;cursor:pointer;
+  flex:1;height:100%;justify-content:center;transition:color .2s ease;
 }
 .nav-item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8;transition:all .2s ease;}
 .nav-item.active{color:var(--gold);}
-
-.nav-center{justify-content:flex-start;padding-top:0;margin-top:-24px;}
-.nav-center .center-circle{
-  width:52px;height:52px;border-radius:50%;
-  background:linear-gradient(150deg,var(--gold),#c99a2e);
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 6px 16px rgba(228,185,79,.4), 0 0 0 5px var(--bg-deep);
-  margin-bottom:5px;transition:transform .2s ease;
-}
-.nav-center.active .center-circle{transform:scale(1.06);}
-.nav-center .center-circle svg{width:24px;height:24px;stroke:#12132a;stroke-width:2;}
-.nav-center span{color:var(--text-muted);}
-.nav-center.active span{color:var(--gold);}
-
 /* ---------- Profile / 我的 ---------- */
 .profile-header{display:flex;flex-direction:column;align-items:center;text-align:center;padding:6px 0 26px;}
 .avatar{
@@ -265,7 +238,65 @@ textarea::placeholder{color:#5b5e85;}
 }
 .profile-name{font-family:'Fraunces',serif;font-size:20px;font-weight:500;margin-bottom:4px;cursor:pointer;}
 .profile-name:hover{color:var(--gold);}
-.profile-sub{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-muted);}
+.profile-sub{font-family:'IBM Plex Mono',monospace;font-size:11px;color:v
+/* ---------- Today manifestation flow ---------- */
+.today-page{padding-top:2px;}
+.today-title{font-family:'Fraunces',serif;font-size:28px;font-weight:500;margin:0 0 18px;}
+.today-section{margin:0 0 18px;}
+.today-section-title{font-size:12px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;margin:0 0 9px;}
+.today-vision-list{display:flex;flex-direction:column;gap:9px;}
+.today-vision{background:var(--bg-panel);border:1px solid var(--line);border-radius:12px;padding:14px 15px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s ease;}
+.today-vision.selected{border-color:var(--gold);box-shadow:0 0 0 1px rgba(228,185,79,.12);}
+.today-vision .tv-check{width:18px;height:18px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.today-vision.selected .tv-check{background:var(--gold);border-color:var(--gold);color:#12132a;}
+.today-vision .tv-name{flex:1;font-size:14px;}
+.today-vision .tv-category{font-size:10px;color:var(--text-muted);}
+.duration-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.duration-option{background:var(--bg-panel);border:1px solid var(--line);color:var(--text-muted);border-radius:10px;padding:10px 4px;text-align:center;cursor:pointer;font-size:12px;}
+.duration-option.selected{background:var(--bg-panel-hi);border-color:var(--gold);color:var(--gold);}
+.sound-preview{display:flex;align-items:center;justify-content:space-between;background:var(--bg-panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;}
+.sound-preview .sound-name{font-size:13px;}
+.sound-preview .sound-note{font-size:10px;color:var(--text-muted);}
+.today-start{width:100%;margin-top:6px;border:0;border-radius:11px;background:var(--gold);color:#12132a;font-weight:600;padding:13px;font-size:13px;cursor:pointer;}
+.today-start:disabled{opacity:.35;cursor:not-allowed;}
+.today-complete{background:var(--bg-panel);border:1px solid var(--gold-dim);border-radius:16px;padding:34px 20px;text-align:center;}
+.today-complete .complete-symbol{width:62px;height:62px;border-radius:50%;margin:0 auto 18px;background:radial-gradient(circle,var(--gold) 0 18%,rgba(228,185,79,.2) 19% 42%,transparent 43%);animation:completePulse 2.2s ease-in-out infinite;}
+.today-complete h2{font-family:'Fraunces',serif;font-size:25px;font-weight:500;margin:0 0 8px;}
+.today-complete p{font-size:12.5px;color:var(--text-muted);line-height:1.7;margin:0;}
+@keyframes completePulse{0%,100%{transform:scale(.95);opacity:.75;}50%{transform:scale(1.08);opacity:1;}}
+
+.timer-screen{position:relative;min-height:calc(100vh - 180px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:26px 10px 40px;overflow:hidden;}
+.meditation-orbit{position:absolute;width:270px;height:270px;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;opacity:.9;}
+.meditation-orbit .ring{position:absolute;inset:0;border:1px solid rgba(228,185,79,.18);border-radius:50%;animation:orbitSpin 18s linear infinite;}
+.meditation-orbit .ring.r2{inset:28px;animation-duration:13s;animation-direction:reverse;border-color:rgba(201,140,167,.18);}
+.meditation-orbit .ring.r3{inset:60px;animation-duration:9s;border-color:rgba(228,185,79,.12);}
+.meditation-orbit .core{position:absolute;inset:92px;border-radius:50%;background:radial-gradient(circle,rgba(228,185,79,.28),rgba(201,140,167,.08) 48%,transparent 70%);animation:coreBreath 5s ease-in-out infinite;}
+@keyframes orbitSpin{to{transform:rotate(360deg);}}
+@keyframes coreBreath{0%,100%{transform:scale(.84);opacity:.6;}50%{transform:scale(1.06);opacity:1;}}
+.timer-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;}
+.timer-vision{font-family:'Fraunces',serif;font-size:24px;margin-bottom:7px;}
+.timer-hint{color:var(--text-muted);font-size:12px;line-height:1.7;}
+.timer-time{font-family:'IBM Plex Mono',monospace;font-size:48px;color:var(--gold);letter-spacing:.04em;margin:22px 0 8px;}
+.timer-sound{color:var(--rose);font-family:'IBM Plex Mono',monospace;font-size:10.5px;margin-top:4px;}
+.timer-actions{display:flex;justify-content:center;gap:10px;margin-top:22px;}
+.timer-actions button{background:rgba(27,29,61,.82);border:1px solid var(--line);color:var(--text-muted);padding:9px 16px;border-radius:9px;font-size:12px;cursor:pointer;}
+.timer-actions .primary{background:var(--gold);border-color:var(--gold);color:#12132a;font-weight:600;}
+.timer-back{position:absolute;top:2px;left:0;background:none;border:0;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer;z-index:3;}
+.complete-overlay{position:fixed;inset:0;z-index:100;background:rgba(10,11,28,.92);display:flex;align-items:center;justify-content:center;padding:24px;animation:overlayIn .35s ease;}
+.complete-card{position:relative;width:min(390px,100%);text-align:center;background:var(--bg-panel);border:1px solid var(--gold-dim);border-radius:20px;padding:38px 22px 28px;overflow:hidden;}
+.complete-burst{position:absolute;inset:0;pointer-events:none;}
+.complete-burst i{position:absolute;left:50%;top:42%;width:5px;height:5px;border-radius:50%;background:var(--gold);animation:burst 1.2s ease-out forwards;transform:rotate(var(--a)) translateY(-10px);}
+.complete-burst i:nth-child(2){--a:35deg}.complete-burst i:nth-child(3){--a:70deg}.complete-burst i:nth-child(4){--a:105deg}.complete-burst i:nth-child(5){--a:140deg}.complete-burst i:nth-child(6){--a:175deg}.complete-burst i:nth-child(7){--a:215deg}.complete-burst i:nth-child(8){--a:250deg}.complete-burst i:nth-child(9){--a:285deg}.complete-burst i:nth-child(10){--a:320deg}
+@keyframes burst{0%{opacity:0;transform:rotate(var(--a)) translateY(-10px) scale(.5)}25%{opacity:1}100%{opacity:0;transform:rotate(var(--a)) translateY(-125px) scale(1.4)}}
+@keyframes overlayIn{from{opacity:0}to{opacity:1}}
+.complete-mark{width:82px;height:82px;margin:0 auto 16px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--gold);box-shadow:0 0 0 10px rgba(228,185,79,.08),0 0 40px rgba(228,185,79,.18);animation:markPop .6s cubic-bezier(.2,.8,.2,1);} .complete-mark span{font-size:34px;color:var(--gold);}
+@keyframes markPop{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+.complete-card h2{font-family:'Fraunces',serif;font-size:28px;font-weight:500;margin:0 0 9px;}
+.complete-card p{font-size:12.5px;color:var(--text-muted);line-height:1.7;margin:0 0 20px;}
+.complete-card button{border:0;border-radius:10px;background:var(--gold);color:#12132a;padding:11px 26px;font-size:12px;font-weight:600;cursor:pointer;}
+@media(max-width:420px){.duration-grid{grid-template-columns:repeat(4,1fr)}.timer-time{font-size:42px}.meditation-orbit{width:235px;height:235px}}
+
+ar(--text-muted);}
 
 .settings-group{margin-top:20px;}
 .settings-group-label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--text-muted);letter-spacing:.06em;margin:0 0 8px 4px;text-transform:uppercase;}
@@ -325,20 +356,11 @@ textarea::placeholder{color:#5b5e85;}
 .dp-nav button:hover:not(:disabled){border-color:var(--gold-dim);color:var(--gold);}
 .dp-nav button:disabled{opacity:.3;cursor:default;}
 </style>
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#f7f1e8">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="显化旅程">
-<link rel="apple-touch-icon" href="icon-192.png">
 </head>
 <body>
 <div class="wrap">
   <div id="topArea"></div>
-  <div class="crumbs" id="crumbs"></div>
   <div id="main"></div>
-  <div class="footer-note" id="footerNote">你的记录仅保存在你自己的设备账户中 · Powered by Manifest</div>
 </div>
 
 <nav class="bottom-nav">
@@ -346,10 +368,12 @@ textarea::placeholder{color:#5b5e85;}
     <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-9.5-8.7C.8 8.4 2.4 4.7 6 4.7c2 0 3.5 1.2 6 4 2.5-2.8 4-4 6-4 3.6 0 5.2 3.7 3.5 7.3C19 16.65 12 21 12 21z"/></svg>
     <span>感恩日记</span>
   </button>
-  <button class="nav-item nav-center" data-tab="home">
-    <div class="center-circle">
-      <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>
-    </div>
+  <button class="nav-item" data-tab="today">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.8 2.2"/><path d="M8 3l-2 2M16 3l2 2"/></svg>
+    <span>今日</span>
+  </button>
+  <button class="nav-item" data-tab="home">
+    <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>
     <span>首页</span>
   </button>
   <button class="nav-item" data-tab="me">
@@ -427,7 +451,7 @@ const STEPS = [
 ];
 
 // ---------- navigation state ----------
-let activeTab = 'home';         // 'home' | 'gratitude' | 'me'
+let activeTab = 'home';         // 'gratitude' | 'today' | 'home' | 'me'
 let nav = {view:'categories', categoryId:null, visionId:null};
 let visions = [];               // [{id, categoryId, title, desc, createdAt}]
 let stepState = {};             // stepState[visionId][stepIndex] = {done, answers}
@@ -436,8 +460,9 @@ let settings = {reminder:true};
 let hiddenCategories = [];
 let categoryOrder = [];
 let customCategoryCount = 0;
-let todayManifest = {duration:5, sound:'雨声'};
+let todayManifest = {duration:5, visionId:null, sound:'雨声', completedDate:null, completedVisionId:null, completedDuration:null};
 let todayExercise = {text:''};
+let todayView = 'home';
 let diary = {};                 // diary[dateKey] = text
 let calMonth = new Date();      // month currently shown in calendar
 let gratView = 'calendar';      // 'calendar' | 'book'
@@ -482,48 +507,11 @@ function hasStepRecord(visionId,i){
   return !!(stepState[visionId] && stepState[visionId][i] && Object.values(stepState[visionId][i].answers||{}).some(v=>String(v).trim()));
 }
 
-// ---------- crumbs ----------
-function renderCrumbs(){
-  const el = document.getElementById('crumbs');
-  let html = `<span class="seg ${nav.view==='categories'?'current':''}" data-go="categories">首页</span>`;
-  if(nav.categoryId){
-    const cat = CATEGORIES.find(c=>c.id===nav.categoryId);
-    html += `<span class="sep">/</span><span class="seg ${nav.view==='visionList'?'current':''}" data-go="visionList">${cat.icon} ${cat.cn}</span>`;
-  }
-  if(nav.visionId){
-    const v = visions.find(v=>v.id===nav.visionId);
-    if(v) html += `<span class="sep">/</span><span class="seg current">${v.title}</span>`;
-  }
-  el.innerHTML = html;
-  el.querySelectorAll('.seg').forEach(s=>{
-    s.addEventListener('click', ()=>{
-      const go = s.getAttribute('data-go');
-      if(go==='categories'){ nav = {view:'categories', categoryId:null, visionId:null}; }
-      if(go==='visionList'){ nav.view='visionList'; nav.visionId=null; }
-      render();
-    });
-  });
-}
-
 // ---------- view: categories ----------
 function renderCategories(){
   const main = document.getElementById('main');
   const visible = CATEGORIES.filter(c=>!hiddenCategories.includes(c.id));
   main.innerHTML = `
-    <div class="daily-tools">
-      <div class="daily-card" id="dailyManifestCard">
-        <div class="dc-kicker">TODAY · 显化练习</div>
-        <h3>今日显化</h3>
-        <p>花一段你自己设定的时间，想象你的愿景已经实现。</p>
-        <span class="dc-action">开始显化 · ${todayManifest.duration} 分钟 →</span>
-      </div>
-      <div class="daily-card" id="dailyExerciseCard">
-        <div class="dc-kicker">TODAY · 今日练习</div>
-        <h3>今日练习</h3>
-        <p>${todayExercise.text ? '继续今天的思考记录。' : '如果理想生活已经发生，今天的你会做什么？'}</p>
-        <span class="dc-action">${todayExercise.text ? '继续记录 →' : '开始练习 →'}</span>
-      </div>
-    </div>
     <div class="category-tools">
       <button class="category-tool" id="manageCategories">管理愿景分类</button>
     </div>
@@ -540,8 +528,6 @@ function renderCategories(){
   `;
   bindCategoryCards(false);
   document.getElementById('manageCategories').addEventListener('click', renderCategoryManager);
-  document.getElementById('dailyManifestCard').addEventListener('click', openManifestSetup);
-  document.getElementById('dailyExerciseCard').addEventListener('click', openTodayExercise);
 }
 
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
@@ -614,13 +600,15 @@ async function loadCategories(){
 function renderVisionList(){
   const main = document.getElementById('main');
   const list = visions.filter(v=>v.categoryId===nav.categoryId);
-  const existingTitles = new Set(list.map(v=>v.title));
-  const presets = (PRESET_VISIONS[nav.categoryId] || []).filter(p=>!existingTitles.has(p));
+  const presets = (PRESET_VISIONS[nav.categoryId] || []);
 
+  const cat = CATEGORIES.find(c=>c.id===nav.categoryId);
   main.innerHTML = `
+    <button class="dp-back" id="visionListBack">← 返回首页</button>
+    <h2 class="vd-title">${escapeHtml(cat ? cat.cn : '愿景')}</h2>
     ${presets.length>0 ? `
     <div class="preset-block">
-      <div class="preset-label">推荐愿景 · 点击即可选择</div>
+      <div class="preset-label">推荐愿景</div>
       <div class="preset-chips" id="presetChips">
         ${presets.map(p=>`<button class="chip" data-title="${p}">${p}</button>`).join('')}
       </div>
@@ -635,12 +623,13 @@ function renderVisionList(){
           const done = visionProgress(v.id);
           return `<div class="vision-card" data-id="${v.id}">
             <div class="vc-title">${v.title}</div>
-            <div class="vc-progress">${done}/7</div>
+            <div class="vc-progress">${done ? `已有 ${done} 个维度记录` : ''}</div>
             <button class="vc-del" data-id="${v.id}">×</button>
           </div>`;
         }).join('')}
     </div>
   `;
+  document.getElementById('visionListBack').addEventListener('click',()=>{nav={view:'categories',categoryId:null,visionId:null};render();});
   document.getElementById('newVisionAdd').addEventListener('click', ()=>addVision());
   document.getElementById('newVisionInput').addEventListener('keydown', e=>{ if(e.key==='Enter') addVision(); });
 
@@ -727,7 +716,7 @@ function renderStepCards(visionId){
   container.innerHTML = '';
   STEPS.forEach((step, i)=>{
     const el = document.createElement('div');
-    el.className = 'step' + (hasStepRecord(visionId,i) ? ' done' : '');
+    el.className = 'step';
     el.innerHTML = `
       <div class="step-head">
         <div class="step-num">${String(i+1).padStart(2,'0')}</div>
@@ -735,7 +724,6 @@ function renderStepCards(visionId){
           <div class="step-cn">${step.cn}</div>
           <div class="step-en">${step.en}</div>
         </div>
-        <div class="step-check"><span style="font-size:10px;color:#12132a;">✦</span></div>
         <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
       </div>
       <div class="step-body">
@@ -746,7 +734,7 @@ function renderStepCards(visionId){
             <textarea data-key="${p.key}" placeholder="${p.ph}">${st[i].answers[p.key] || ''}</textarea>
           </div>
         `).join('')}
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--text-muted);margin-top:4px;">${hasStepRecord(visionId,i)?'已有记录 · 可随时回来继续修改':'还没有记录 · 你可以从任何一步开始'}</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--text-muted);margin-top:4px;">${hasStepRecord(visionId,i)?'已有记录':'还没有记录'}</div>
       </div>
     `;
     container.appendChild(el);
@@ -759,7 +747,6 @@ function renderStepCards(visionId){
         const key = ta.getAttribute('data-key');
         st[i].answers[key] = ta.value;
         await saveStep(visionId, i);
-        el.classList.toggle('done', hasStepRecord(visionId,i));
         renderConstellation(visionId);
       });
     });
@@ -774,17 +761,19 @@ function renderVisionDetail(){
   const main = document.getElementById('main');
   main.innerHTML = `
     <div class="vd-header">
-      <button class="vd-delete" id="vdDelete">删除这个愿景</button>
+      <button class="dp-back" id="visionBack">← 返回愿景</button>
       <h2 class="vd-title">${v.title}</h2>
       <div class="vd-desc-wrap">
         <label>详细描述这个愿景（越具体越好）</label>
         <textarea id="vdDesc" placeholder="描述这个愿景实现时的具体画面、数字、时间……">${v.desc||''}</textarea>
       </div>
+      <button class="vd-delete" id="vdDelete">删除这个愿景</button>
     </div>
     <svg class="constellation" viewBox="0 0 620 140" id="constellation"></svg>
     <div class="progress-label" id="progressLabel"></div>
     <div class="steps" id="stepsEl"></div>
   `;
+  document.getElementById('visionBack').addEventListener('click',()=>{ nav={view:'visionList',categoryId:nav.categoryId,visionId:null}; render(); });
   document.getElementById('vdDesc').addEventListener('blur', async (e)=>{
     v.desc = e.target.value;
     await saveVisions();
@@ -807,16 +796,17 @@ function renderTopArea(){
   if(activeTab==='home'){
     el.innerHTML = `
       <div class="hero">
-        <div class="eyebrow">MANIFEST · 七步显化法</div>
         <h1>显化旅程</h1>
-        <p class="sub">改编自 Roxie Nafousi《显化》(Manifest) 七个步骤 — 为每一个具体愿景，单独记录你的清晰、疑虑、行动与感恩。</p>
       </div>`;
   } else if(activeTab==='gratitude'){
     el.innerHTML = `
       <div class="hero">
-        <div class="eyebrow">STEP 5 · 拥抱感恩</div>
         <h1>感恩日记</h1>
-        <p class="sub">不加"但是"，不打折扣。每天记录一件真心感恩的事。</p>
+      </div>`;
+  } else if(activeTab==='today'){
+    el.innerHTML = `
+      <div class="hero">
+        <h1>今日</h1>
       </div>`;
   } else if(activeTab==='me'){
     el.innerHTML = `
@@ -905,6 +895,8 @@ function renderMe(){
       for(const v of visions){ await deleteVisionData(v.id); }
       await window.storage.delete('visions');
       await window.storage.delete('gratitude-log');
+      await window.storage.delete('gratitude-diary');
+      await window.storage.delete('daily-state');
     }catch(e){}
     visions = [];
     stepState = {};
@@ -920,19 +912,15 @@ function render(){
   document.querySelectorAll('.nav-item').forEach(b=>{
     b.classList.toggle('active', b.getAttribute('data-tab')===activeTab);
   });
-  document.getElementById('footerNote').style.display = activeTab==='me' ? 'none' : 'block';
-
   if(activeTab==='home'){
-    document.getElementById('crumbs').style.display = '';
-    renderCrumbs();
     if(nav.view==='categories') renderCategories();
     else if(nav.view==='visionList') renderVisionList();
     else if(nav.view==='visionDetail') renderVisionDetail();
   } else if(activeTab==='gratitude'){
-    document.getElementById('crumbs').style.display = 'none';
     renderGratitudeTab();
+  } else if(activeTab==='today'){
+    renderTodayTab();
   } else if(activeTab==='me'){
-    document.getElementById('crumbs').style.display = 'none';
     renderMe();
   }
 }
@@ -1000,11 +988,6 @@ function renderCalendarView(){
   }
 
   main.innerHTML = `
-    <div class="quick-entry">
-      <div class="qe-label">今天 · ${parseKey(today).getMonth()+1}月${parseKey(today).getDate()}日</div>
-      <textarea id="qeText" placeholder='今天有什么值得感恩的事（不加"但是"）？'>${diary[today]||''}</textarea>
-      <div class="qe-hint" id="qeToBook">在日记本中查看 →</div>
-    </div>
     <div class="calendar">
       <div class="cal-header">
         <button class="cal-nav-btn" id="calPrev">‹</button>
@@ -1014,15 +997,15 @@ function renderCalendarView(){
       <div class="cal-weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
       <div class="cal-grid">${cells}</div>
     </div>
+    <div class="quick-entry" style="margin-top:16px;">
+      <div class="qe-label">今天 · ${parseKey(today).getMonth()+1}月${parseKey(today).getDate()}日</div>
+      <textarea id="qeText" placeholder='今天有什么值得感恩的事（不加"但是"）？'>${diary[today]||''}</textarea>
+      <button class="today-start" id="qeDone" style="margin-top:10px;">完成</button>
+    </div>
   `;
 
-  document.getElementById('qeText').addEventListener('blur', async (e)=>{
-    const val = e.target.value;
-    if(val.trim()) diary[today] = val; else delete diary[today];
-    await saveDiary();
-    renderCalendarView();
-  });
-  document.getElementById('qeToBook').addEventListener('click', ()=> openBook(today));
+  document.getElementById('qeText').addEventListener('input', (e)=>{ diary[today] = e.target.value; });
+  document.getElementById('qeDone').addEventListener('click', async ()=>{ await saveCurrentQuickDiary(); renderCalendarView(); });
 
   document.getElementById('calPrev').addEventListener('click', ()=>{
     calMonth = new Date(year, month-1, 1);
@@ -1038,6 +1021,14 @@ function renderCalendarView(){
   });
 }
 
+async function saveCurrentQuickDiary(){
+  const ta=document.getElementById('qeText');
+  if(!ta) return;
+  const val=ta.value;
+  if(val.trim()) diary[todayKeyStr()]=val; else delete diary[todayKeyStr()];
+  await saveDiary();
+}
+
 function openBook(key){
   gratDate = key;
   gratView = 'book';
@@ -1046,13 +1037,14 @@ function openBook(key){
 
 function renderBookView(){
   const main = document.getElementById('main');
+  const isToday = gratDate === todayKeyStr();
   main.innerHTML = `
     <div class="book-wrap">
       <div class="diary-page" id="diaryPage">
         <button class="dp-back" id="dpBack">← 返回日历</button>
         <div class="dp-date" id="dpDate"></div>
         <div class="dp-weekday" id="dpWeekday"></div>
-        <textarea id="dpText" placeholder='今天有什么值得感恩的事（不加"但是"）？' style="min-height:180px;"></textarea>
+        ${isToday ? `<textarea id="dpText" placeholder='今天有什么值得感恩的事（不加"但是"）？' style="min-height:180px;"></textarea><button class="today-start" id="dpDone" style="margin-top:10px;">完成</button>` : `<div id="dpText" style="min-height:180px;padding:14px 2px;color:var(--text-primary);font-size:14px;line-height:1.9;white-space:pre-wrap;"></div>`}
         <div class="dp-nav">
           <button id="dpPrev">‹ 前一天</button>
           <button id="dpNext">后一天 ›</button>
@@ -1062,7 +1054,7 @@ function renderBookView(){
   `;
   fillBookContent(gratDate);
 
-  document.getElementById('dpText').addEventListener('blur', saveCurrentDiaryText);
+  if(isToday){ document.getElementById('dpText').addEventListener('input', saveCurrentDiaryText); document.getElementById('dpDone').addEventListener('click', async ()=>{await saveCurrentDiaryText(); gratView='calendar'; render();}); }
   document.getElementById('dpBack').addEventListener('click', async ()=>{
     await saveCurrentDiaryText();
     gratView = 'calendar';
@@ -1080,71 +1072,148 @@ function fillBookContent(key){
   const weekdayNames = ['周日','周一','周二','周三','周四','周五','周六'];
   document.getElementById('dpDate').textContent = `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
   document.getElementById('dpWeekday').textContent = weekdayNames[d.getDay()];
-  document.getElementById('dpText').value = diary[key] || '';
+  const textEl=document.getElementById('dpText'); if(textEl.tagName==='TEXTAREA') textEl.value = diary[key] || ''; else textEl.textContent = diary[key] || '这一天还没有记录。';
   document.getElementById('dpNext').disabled = key >= todayKeyStr();
 }
 
 async function saveCurrentDiaryText(){
   const ta = document.getElementById('dpText');
-  if(!ta) return;
+  if(!ta || ta.tagName!=='TEXTAREA' || gratDate!==todayKeyStr()) return;
   const val = ta.value;
   if(val.trim()) diary[gratDate] = val; else delete diary[gratDate];
   await saveDiary();
 }
 
 async function flipTo(newKey, dir){
-  await saveCurrentDiaryText();
+  if(gratDate===todayKeyStr()) await saveCurrentDiaryText();
   const page = document.getElementById('diaryPage');
-  page.classList.add('out', dir);
+  if(page) page.classList.add('out', dir);
   setTimeout(()=>{
     gratDate = newKey;
-    fillBookContent(newKey);
-    page.classList.add('no-anim');
-    page.classList.remove('fwd','back');
-    page.classList.add(dir==='fwd' ? 'back' : 'fwd');
-    void page.offsetWidth;
-    page.classList.remove('no-anim');
-    requestAnimationFrame(()=>{
-      page.classList.remove('out','fwd','back');
-    });
+    renderBookView();
   }, 260);
 }
 
 
-// ---------- daily manifestation + exercise ----------
-function openManifestSetup(){
+// ---------- Today: manifestation + exercise ----------
+const MANIFEST_SOUND_MAP = {
+  wealth:'轻音乐', love:'海浪', career:'雨声', study:'森林',
+  health:'森林', relationship:'海浪', growth:'森林', other:'雨声'
+};
+
+function soundForVision(v){ return MANIFEST_SOUND_MAP[v && v.categoryId] || '雨声'; }
+function todayManifestCompleted(){ return todayManifest.completedDate===todayKeyStr(); }
+
+function renderTodayTab(){
   const main=document.getElementById('main');
-  main.innerHTML=`<div class="vd-header"><button class="vd-delete" id="dailyBack">← 返回首页</button><h2 class="vd-title">今日显化</h2><div class="vd-desc-wrap"><label>先设置今天想花多少时间</label><div class="manifest-config"><label>显化时长</label><select id="manifestDuration">${[1,3,5,10,15,20,30].map(x=>`<option value="${x}" ${todayManifest.duration===x?'selected':''}>${x} 分钟</option>`).join('')}</select><label style="margin-top:10px;">声音</label><select id="manifestSound"><option ${todayManifest.sound==='雨声'?'selected':''}>雨声</option><option ${todayManifest.sound==='海浪'?'selected':''}>海浪</option><option ${todayManifest.sound==='森林'?'selected':''}>森林</option><option ${todayManifest.sound==='轻音乐'?'selected':''}>轻音乐</option></select></div></div><div class="vision-list">${visions.length?visions.map(v=>`<div class="vision-card" data-manifest-vision="${v.id}"><div class="vc-title">${escapeHtml(v.title)}</div><div class="vc-progress">开始 →</div></div>`).join(''):'<div class="vision-empty">先创建一个愿景，再开始今日显化。</div>'}</div></div>`;
-  document.getElementById('dailyBack').addEventListener('click',()=>render());
-  document.getElementById('manifestDuration').addEventListener('change',async e=>{todayManifest.duration=Number(e.target.value);await saveDailyState();});
-  document.getElementById('manifestSound').addEventListener('change',async e=>{todayManifest.sound=e.target.value;await saveDailyState();});
-  main.querySelectorAll('[data-manifest-vision]').forEach(el=>el.addEventListener('click',()=>startManifestation(el.dataset.manifestVision)));
+  if(todayView==='manifest') return renderManifestSetup();
+  if(todayView==='exercise') return openTodayExercise();
+  const completed=todayManifestCompleted();
+  main.innerHTML=`<div class="today-page"><div class="daily-tools">
+    <div class="daily-card" id="todayManifestCard">
+      <div class="dc-kicker">今日显化</div>
+      <h3>${completed?'今日已完成':'今日显化'}</h3>
+      <p>${completed?'本次显化已完成。':'选择愿景、设置时长，进入今天的显化。'}</p>
+      <span class="dc-action">${completed?'查看完成状态 →':'开始 →'}</span>
+    </div>
+    <div class="daily-card" id="todayExerciseCard">
+      <div class="dc-kicker">今日练习</div>
+      <h3>今日练习</h3>
+      <p>${todayExercise.text?'继续今天的思考记录。':'如果你已经拥有理想的生活，今天的你会做出什么不同的选择？'}</p>
+      <span class="dc-action">${todayExercise.text?'继续记录 →':'开始 →'}</span>
+    </div>
+  </div></div>`;
+  document.getElementById('todayManifestCard').addEventListener('click',()=>{todayView='manifest';renderTodayTab();});
+  document.getElementById('todayExerciseCard').addEventListener('click',()=>{todayView='exercise';renderTodayTab();});
 }
+
+function renderManifestSetup(){
+  const main=document.getElementById('main');
+  if(todayManifestCompleted()){
+    const v=visions.find(x=>x.id===todayManifest.completedVisionId); const title=v?v.title:'你的愿景';
+    main.innerHTML=`<div class="today-complete"><div class="complete-symbol"></div><h2>今日已完成</h2><p>今天，花 ${todayManifest.completedDuration||todayManifest.duration} 分钟想象「${escapeHtml(title)}」已经实现。</p><button class="today-start" id="manifestDoneBack" style="margin-top:20px;">返回今日</button></div>`;
+    document.getElementById('manifestDoneBack').addEventListener('click',()=>{todayView='home';renderTodayTab();});
+    return;
+  }
+  const selected=visions.find(v=>v.id===todayManifest.visionId);
+  const sound=selected ? soundForVision(selected) : '选择愿景后自动匹配';
+  main.innerHTML=`<div class="today-page"><button class="dp-back" id="manifestSetupBack">← 返回今日</button>
+    <div class="today-section"><div class="today-section-title">1 · 选择愿景</div>
+      <div class="today-vision-list">${visions.length?visions.map(v=>`<div class="today-vision ${selected&&selected.id===v.id?'selected':''}" data-today-vision="${v.id}"><div class="tv-check">${selected&&selected.id===v.id?'✓':''}</div><div class="tv-name">${escapeHtml(v.title)}</div><div class="tv-category">${escapeHtml((CATEGORIES.find(c=>c.id===v.categoryId)||{}).cn||'其他')}</div></div>`).join(''):'<div class="vision-empty">先在首页创建一个愿景。</div>'}</div>
+    </div>
+    <div class="today-section"><div class="today-section-title">2 · 背景音</div>
+      <div class="sound-preview"><span class="sound-name">♪ ${sound}</span><span class="sound-note">自动匹配</span></div>
+    </div>
+    <div class="today-section"><div class="today-section-title">3 · 显化时长</div>
+      <div class="duration-grid">${[1,3,5,10,15,20,30].map(x=>`<button class="duration-option ${todayManifest.duration===x?'selected':''}" data-duration="${x}">${x} 分钟</button>`).join('')}</div>
+    </div>
+    <button class="today-start" id="todayStart" ${selected?'':'disabled'}>4 · 开始显化</button>
+  </div>`;
+  document.getElementById('manifestSetupBack').addEventListener('click',()=>{todayView='home';renderTodayTab();});
+  main.querySelectorAll('[data-today-vision]').forEach(el=>el.addEventListener('click',async()=>{
+    const v=visions.find(x=>x.id===el.dataset.todayVision); if(!v)return;
+    todayManifest.visionId=v.id; todayManifest.sound=soundForVision(v); await saveDailyState(); renderManifestSetup();
+  }));
+  main.querySelectorAll('[data-duration]').forEach(el=>el.addEventListener('click',async()=>{
+    todayManifest.duration=Number(el.dataset.duration); await saveDailyState(); renderManifestSetup();
+  }));
+  document.getElementById('todayStart').addEventListener('click',()=>startManifestation(todayManifest.visionId));
+}
+
+function createAmbientAudio(type){
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext; if(!AC)return null;
+    const ctx=new AC(); const gain=ctx.createGain(); gain.gain.value=0.0001; gain.connect(ctx.destination);
+    const nodes=[];
+    const master=ctx.createGain(); master.gain.value=0.035; master.connect(gain);
+    if(type==='轻音乐'){
+      [220,277.18,329.63].forEach((f,i)=>{const o=ctx.createOscillator();const g=ctx.createGain();o.type='sine';o.frequency.value=f;g.gain.value=.18;o.connect(g);g.connect(master);o.start();nodes.push(o,g);});
+    }else{
+      const buffer=ctx.createBuffer(1,ctx.sampleRate*2,ctx.sampleRate); const data=buffer.getChannelData(0);
+      for(let i=0;i<data.length;i++){ data[i]=(Math.random()*2-1)*(type==='海浪'?0.5:0.32); }
+      const src=ctx.createBufferSource();src.buffer=buffer;src.loop=true;
+      const filter=ctx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=type==='海浪'?1100: type==='森林'?2200:1700;
+      src.connect(filter);filter.connect(master);src.start();nodes.push(src,filter);
+    }
+    gain.gain.exponentialRampToValueAtTime(1,ctx.currentTime+.8);
+    return {ctx,nodes,gain};
+  }catch(e){return null;}
+}
+function stopAmbientAudio(audio){ if(!audio)return; try{audio.gain.gain.exponentialRampToValueAtTime(.0001,audio.ctx.currentTime+.35); setTimeout(()=>audio.ctx.close().catch(()=>{}),450);}catch(e){} }
+
 function startManifestation(visionId){
   const v=visions.find(x=>x.id===visionId); if(!v)return;
-  let total=todayManifest.duration*60, left=total, timer=null, running=false;
+  const duration=Math.max(1,Number(todayManifest.duration)||5); const sound=soundForVision(v); todayManifest.sound=sound;
+  let remaining=duration*60; let running=false; let timer=null; let lastTick=0; let audio=null;
   const main=document.getElementById('main');
-  const tick=()=>{const el=document.getElementById('timerTime'); if(el)el.textContent=`${String(Math.floor(left/60)).padStart(2,'0')}:${String(left%60).padStart(2,'0')}`;};
-  main.innerHTML=`<div class="timer-screen"><button class="dp-back" id="timerBack">← 返回设置</button><div class="timer-vision">${escapeHtml(v.title)}</div><div class="timer-hint">闭上眼睛，想象它已经实现。<br>感受那个时候的自己。</div><div class="timer-time" id="timerTime"></div><div class="timer-sound">♪ ${todayManifest.sound} · 计时期间播放</div><div class="timer-actions"><button id="timerPause">暂停</button><button class="primary" id="timerStart">开始</button></div></div>`;
+  main.innerHTML=`<div class="timer-screen"><button class="timer-back" id="timerBack">← 返回今日</button><div class="meditation-orbit"><div class="ring"></div><div class="ring r2"></div><div class="ring r3"></div><div class="core"></div></div><div class="timer-content"><div class="timer-vision">${escapeHtml(v.title)}</div><div class="timer-hint">闭上眼睛。\n想象它已经实现，感受那个时候的自己。</div><div class="timer-time" id="timerTime"></div><div class="timer-sound">♪ ${sound}</div><div class="timer-actions"><button id="timerPause">暂停</button><button class="primary" id="timerStart">开始</button></div></div></div>`;
+  const tick=()=>{const el=document.getElementById('timerTime'); if(!el)return; const sec=Math.max(0,Math.ceil(remaining)); el.textContent=`${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`;};
   tick();
-  document.getElementById('timerBack').addEventListener('click',()=>openManifestSetup());
-  document.getElementById('timerStart').addEventListener('click',()=>{if(running)return;running=true;document.getElementById('timerStart').textContent='进行中';timer=setInterval(()=>{left--;tick();if(left<=0){clearInterval(timer);finishManifestation(v);}},1000);});
-  document.getElementById('timerPause').addEventListener('click',()=>{if(timer){clearInterval(timer);timer=null;}running=false;document.getElementById('timerStart').textContent='继续';});
+  const stop=()=>{if(timer){clearInterval(timer);timer=null;} stopAmbientAudio(audio); audio=null; running=false;};
+  document.getElementById('timerBack').addEventListener('click',()=>{stop();todayView='manifest';renderTodayTab();});
+  document.getElementById('timerStart').addEventListener('click',async()=>{
+    if(running)return; running=true; document.getElementById('timerStart').textContent='进行中';
+    if(!audio) audio=createAmbientAudio(sound); if(audio&&audio.ctx.state==='suspended') await audio.ctx.resume().catch(()=>{});
+    lastTick=Date.now(); timer=setInterval(()=>{const now=Date.now(); remaining-=(now-lastTick)/1000; lastTick=now; tick(); if(remaining<=0){stop();finishManifestation(v,duration);}},250);
+  });
+  document.getElementById('timerPause').addEventListener('click',()=>{if(!running)return; if(timer){clearInterval(timer);timer=null;} running=false; document.getElementById('timerStart').textContent='继续'; stopAmbientAudio(audio); audio=null;});
 }
-async function finishManifestation(v){
-  const mins=todayManifest.duration;
-  try{let r=await window.storage.get('manifest-history');let arr=r?JSON.parse(r.value):[];arr.push({date:todayKeyStr(),visionId:v.id,visionTitle:v.title,duration:mins,sound:todayManifest.sound,createdAt:new Date().toISOString()});await window.storage.set('manifest-history',JSON.stringify(arr));}catch(e){}
-  const main=document.getElementById('main');main.innerHTML=`<div class="diary-page"><div class="dp-date">今日显化完成</div><div class="dp-weekday" style="margin-bottom:20px;">今天，花 ${mins} 分钟想象「${escapeHtml(v.title)}」已经实现。</div><p style="text-align:center;color:var(--text-muted);font-size:13px;line-height:1.7;">这不是一个终点。明天，你仍然可以再次回来。</p><div style="text-align:center;margin-top:22px;"><button class="mark-btn on" id="manifestDoneBack">返回首页</button></div></div>`;
-  document.getElementById('manifestDoneBack').addEventListener('click',()=>render());
+
+async function finishManifestation(v,mins){
+  todayManifest.completedDate=todayKeyStr(); todayManifest.completedVisionId=v.id; todayManifest.completedDuration=mins; todayManifest.visionId=v.id; todayManifest.sound=soundForVision(v); await saveDailyState();
+  const main=document.getElementById('main');
+  main.innerHTML=`<div class="complete-overlay"><div class="complete-card"><div class="complete-burst">${Array.from({length:10},()=>'<i></i>').join('')}</div><div class="complete-mark"><span>✦</span></div><h2>今日显化完成</h2><p>今天，花 ${mins} 分钟想象「${escapeHtml(v.title)}」已经实现。</p><button id="completeTodayBtn">完成</button></div></div>`;
+  document.getElementById('completeTodayBtn').addEventListener('click',()=>{todayView='home';renderTodayTab();});
 }
+
 function openTodayExercise(){
   const main=document.getElementById('main');
-  main.innerHTML=`<div class="vd-header"><button class="vd-delete" id="exerciseBack">← 返回首页</button><h2 class="vd-title">今日练习</h2><div class="vd-desc-wrap"><label>如果你已经拥有理想的生活，今天的你会做出什么不同的选择？</label><div class="exercise-box"><textarea id="exerciseText" placeholder="写下今天的答案……">${escapeHtml(todayExercise.text)}</textarea></div><div style="text-align:right;margin-top:8px;font-size:10.5px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;">自动保存</div></div></div>`;
-  document.getElementById('exerciseBack').addEventListener('click',()=>render());
+  main.innerHTML=`<div class="vd-header"><button class="dp-back" id="exerciseBack">← 返回今日</button><h2 class="vd-title">今日练习</h2><div class="vd-desc-wrap"><label>如果你已经拥有理想的生活，今天的你会做出什么不同的选择？</label><div class="exercise-box"><textarea id="exerciseText" placeholder="写下今天的答案……">${escapeHtml(todayExercise.text)}</textarea></div><div style="text-align:right;margin-top:8px;font-size:10.5px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;">自动保存</div></div></div>`;
+  document.getElementById('exerciseBack').addEventListener('click',()=>{todayView='home';renderTodayTab();});
   document.getElementById('exerciseText').addEventListener('blur',async e=>{todayExercise.text=e.target.value;await saveDailyState();});
 }
-async function saveDailyState(){try{await window.storage.set('daily-state',JSON.stringify({todayManifest,todayExercise}));}catch(e){}}
-async function loadDailyState(){try{const r=await window.storage.get('daily-state');if(r){const x=JSON.parse(r.value);todayManifest=x.todayManifest||todayManifest;todayExercise=x.todayExercise||todayExercise;}}catch(e){}}
+function saveDailyState(){return (async()=>{try{await window.storage.set('daily-state',JSON.stringify({todayManifest,todayExercise}));}catch(e){}})();}
+function loadDailyState(){return (async()=>{try{const r=await window.storage.get('daily-state');if(r){const x=JSON.parse(r.value);todayManifest={...todayManifest,...(x.todayManifest||{})};todayExercise=x.todayExercise||todayExercise;}}catch(e){}})();}
 
 // ---------- init ----------
 (async function init(){
@@ -1157,9 +1226,5 @@ async function loadDailyState(){try{const r=await window.storage.get('daily-stat
   render();
 })();
 </script>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-}
-</script></body>
+</body>
 </html>
